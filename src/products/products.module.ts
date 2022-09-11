@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import Category from 'src/entities/category.entity';
 import Product from 'src/entities/product.entity';
 import Property from 'src/entities/properties.entity';
-import { ProductMiddleware } from './product.middleware';
+import { AdminMiddleware } from '../middlewares/admin.middleware';
 import { ProductAdminController } from './products.admin.controller';
 import { ProductsController } from './products.controller';
 import { ProductsService } from './products.service';
@@ -16,7 +16,7 @@ import { ProductsService } from './products.service';
 export class ProductsModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
-    .apply(ProductMiddleware)
+    .apply(AdminMiddleware)
     .forRoutes(ProductAdminController)
   }
 }

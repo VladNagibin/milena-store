@@ -2,7 +2,7 @@ import { Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import * as jwt from 'jsonwebtoken'
 @Injectable()
-export class ProductMiddleware implements NestMiddleware {
+export class AdminMiddleware implements NestMiddleware {
     use(req: Request, res: Response, next: NextFunction) {
         const { authorization } = req.headers
         try {
