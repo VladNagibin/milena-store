@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { ProductsModule } from './products/products.module';
 import { UsersModule } from './users/users.module';
 import { CategoriesModule } from './categories/categories.module';
+import { OrdersModule } from './orders/orders.module';
 import * as dotenv from 'dotenv'
 dotenv.config()
 
@@ -20,7 +21,7 @@ dotenv.config()
     database:process.env.DB,
     entities:['dist/entities/**/*.entity.js'],
     synchronize:true
-  }),UsersModule, CategoriesModule],
+  }),UsersModule, CategoriesModule, OrdersModule],
   controllers: [AppController],
   providers: [AppService],
 })
