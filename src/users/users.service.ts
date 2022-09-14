@@ -70,6 +70,10 @@ export class UsersService {
         })
     }
 
+    
+    getAllOrders(id:number):Promise<User>{
+        return this.usersRepository.createQueryBuilder('users').leftJoinAndSelect('users.orders','user').where(`users.id = ${id}`).getOne()//findOneBy({id})
+    }
 
 
     findOne(id: number): Promise<User> {

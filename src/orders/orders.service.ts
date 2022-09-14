@@ -22,6 +22,7 @@ export class OrdersService {
     getById(id: number): Promise<Order> {
         return this.orderRepository.createQueryBuilder('order').leftJoinAndSelect('product.orders', 'products').where(`order.id = ${id}`).getOne()
     }
+
     async createNew(data: NewOrder): Promise<Order | Error> {
         let user = new Promise<User>((res, rej) => {
             if (typeof data.user == 'number') {
@@ -35,7 +36,7 @@ export class OrdersService {
             }
         })
         let products = new Promise<Array<Product>>((res, rej) => {
-            let allProducts: Array<Promise<Product>>
+            let allProducts: Array<Promise<Product>>= []
             data.products.forEach(id => {
                 allProducts.push(new Promise((resolve, reject) => {
                     if (typeof id == 'number') {

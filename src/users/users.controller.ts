@@ -14,6 +14,10 @@ export class UsersController {
     getOne(@Param('id') id:number):Promise<User>{
         return this.usersService.findOne(id)
     }
+    @Get('/orders/:id')
+    getAllOrders(@Param('id') id:number):Promise<User>{
+        return this.usersService.getAllOrders(id)
+    }
 
     @Post()
     @HttpCode(HttpStatus.CREATED)
