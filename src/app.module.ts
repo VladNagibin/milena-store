@@ -1,13 +1,12 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ProductsModule } from './products/products.module';
 import { UsersModule } from './users/users.module';
 import { CategoriesModule } from './categories/categories.module';
 import { OrdersModule } from './orders/orders.module';
 import * as dotenv from 'dotenv'
+import { ClientModule } from './client/client.module';
 dotenv.config()
 
 
@@ -21,10 +20,7 @@ dotenv.config()
     database:process.env.DB,
     entities:['dist/entities/**/*.entity.js'],
     synchronize:true
-  }),UsersModule, CategoriesModule, OrdersModule],
-  controllers: [AppController],
-  providers: [AppService],
+  }),UsersModule, CategoriesModule, OrdersModule,ClientModule],
 })
 export class AppModule {
-  constructor(private dataSource:DataSource){}
 }

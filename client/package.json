@@ -4,7 +4,8 @@
   "description": "client-milena-store",
   "main": "webpack.config.js",
   "scripts": {
-    "start": "webpack"
+    "build": "webpack",
+    "dev": "webpack-dev-server --mode development --open"
   },
   "author": "",
   "license": "ISC",
@@ -29,7 +30,12 @@
     "webpack-dev-server": "^4.11.0"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.8.5",
+    "http-proxy-middleware": "^2.0.6",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-redux": "^8.0.2",
+    "react-router-dom": "^6.4.0",
+    "redux": "^4.2.0"
   }
 }

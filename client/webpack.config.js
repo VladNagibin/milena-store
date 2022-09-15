@@ -18,13 +18,21 @@ module.exports = {
     },
     devServer: {
         port: 3000,
+        historyApiFallback: true,
         static: {
             directory: path.join(__dirname, 'public')
+        },
+        proxy: {
+            '/users': {
+                target: 'http://localhost:3000',
+                router: () => 'http://localhost:5000',
+                logLevel: 'debug' /*optional*/
+            }
         }
     },
     plugins: [
         new HTMLWebpackPlugin({
-            template: path.resolve(__dirname,'public', 'index.html'),
+            template: path.resolve(__dirname, 'public', 'index.html'),
             minify: {
                 collapseWhitespace: false
             }
