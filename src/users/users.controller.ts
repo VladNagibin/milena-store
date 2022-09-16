@@ -14,14 +14,18 @@ export class UsersController {
     getOne(@Param('id') id:number):Promise<User>{
         return this.usersService.findOne(id)
     }
+    @Get('/orders/:id')
+    getAllOrders(@Param('id') id:number):Promise<User>{
+        return this.usersService.getAllOrders(id)
+    }
 
-    @Post()
+    @Put()
     @HttpCode(HttpStatus.CREATED)
     async create(@Body() createUser:NewUser){
         var user = await this.usersService.create(createUser)
         return {success:true,id:user.id}
     }
-    @Put()
+    @Post()
     @HttpCode(HttpStatus.ACCEPTED)
     async enter(@Body() data:Enter):Promise<answer>{
         try{

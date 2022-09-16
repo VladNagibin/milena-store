@@ -1,0 +1,19 @@
+$clr:#222327;
+@import './components/header-magic.scss';
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto';
+}
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: $clr;
+}
+
+    

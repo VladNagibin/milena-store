@@ -49,27 +49,31 @@ export class UsersService {
                         } else {
                             reject({
                                 success: false,
-                                err: 'password isn\'t valid'
+                                error: 'password isn\'t valid'
                             })
                         }
-                    }, err => {
+                    }, error => {
                         reject({
                             success: false,
-                            err
+                            error
                         })
 
                     })
                 }
 
-            }, err => {
+            }, error => {
                 reject({
                     success: false,
-                    err
+                    error
                 })
             })
         })
     }
 
+    
+    getAllOrders(id:number):Promise<User>{
+        return this.usersRepository.createQueryBuilder('users').leftJoinAndSelect('users.orders','user').where(`users.id = ${id}`).getOne()//findOneBy({id})
+    }
 
 
     findOne(id: number): Promise<User> {
