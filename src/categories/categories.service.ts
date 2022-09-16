@@ -27,7 +27,7 @@ export class CategoriesService {
         return this.categoryRepository.findBy({parent:parentCategory})
     }
     getOne(id:number):Promise<Category>{
-        return this.categoryRepository.findOneBy({id})
+        return this.categoryRepository.createQueryBuilder('category').leftJoinAndSelect('category.products','product').where(`category.id = ${id}`).getOne()
     }
 
     async createOne(data:NewCategory):Promise<Category>{
