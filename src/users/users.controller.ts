@@ -19,13 +19,13 @@ export class UsersController {
         return this.usersService.getAllOrders(id)
     }
 
-    @Post()
+    @Put()
     @HttpCode(HttpStatus.CREATED)
     async create(@Body() createUser:NewUser){
         var user = await this.usersService.create(createUser)
         return {success:true,id:user.id}
     }
-    @Put()
+    @Post()
     @HttpCode(HttpStatus.ACCEPTED)
     async enter(@Body() data:Enter):Promise<answer>{
         try{

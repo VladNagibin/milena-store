@@ -49,22 +49,22 @@ export class UsersService {
                         } else {
                             reject({
                                 success: false,
-                                err: 'password isn\'t valid'
+                                error: 'password isn\'t valid'
                             })
                         }
-                    }, err => {
+                    }, error => {
                         reject({
                             success: false,
-                            err
+                            error
                         })
 
                     })
                 }
 
-            }, err => {
+            }, error => {
                 reject({
                     success: false,
-                    err
+                    error
                 })
             })
         })

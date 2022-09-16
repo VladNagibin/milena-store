@@ -1,69 +1,42 @@
-import {createSlice} from '@reduxjs/toolkit'
-import type {PayloadAction} from '@reduxjs/toolkit'
-interface IAuthState {
-    login: string
-    token: string
-    ready: boolean
+import { createSlice } from '@reduxjs/toolkit'
+import type { PayloadAction } from '@reduxjs/toolkit'
+
+export class ILoginData {
+    login: string = ''
+    token: string = ''
 }
-const initialState:IAuthState={
-    login:'',
-    token:'',
-    ready:false
-}
-export interface ILoginData{
-    login:string
-    token:string
-}
+
 const localstorageName = 'milena-store-authefication'
 
-// const out = () => {
-//     setLogin('')
-//     setToken('')
-//     localStorage.removeItem(localstorageName)
-// }
-
-// useEffect(() => {
-//     const dataJSON = localStorage.getItem(localstorageName)
-//     if (dataJSON) {
-//         const data = JSON.parse(dataJSON)
-//         if (data.login && data.token) {
-//             setLogin(data.login)
-//             setToken(data.token)
-//         }
-//     }
-//     setReady(true)
-// }, [])
+const sLocalstorage = localStorage.getItem(localstorageName)
+const initialState: ILoginData = sLocalstorage ? JSON.parse(sLocalstorage) : {
+    login: '',
+    token: '',
+}
 
 
-export const authSlice = createSlice({
-    name:'auth',
+
+
+const authSlice = createSlice({
+    name: 'auth',
     initialState,
-    reducers:{
-        enter:(state,action:PayloadAction<ILoginData>)=>{
+    reducers: {
+        enter: (state = initialState, action: PayloadAction<ILoginData>) => {
             localStorage.setItem(localstorageName, JSON.stringify({
-                login:action.payload.login,
-                token:action.payload.token
+                login: action.payload.login,
+                token: action.payload.token
             }))
-            state = {
-                login:action.payload.login,
-                token:action.payload.token,
-                ready:true
-            }
+            state.login = action.payload.login
+            state.token = action.payload.token
         },
-        out:(state)=>{
+        out: (state) => {
             localStorage.removeItem(localstorageName)
-            state =  {
-                login:'',
-                token:'',
-                ready:true
-            }
-        },
-        alreadyLogged:(state)=>{
-            return state
-        }   
+            state.login = ''
+            state.token = ''
+        }
 
     }
 })
-export const {enter} = authSlice.actions
+export const { enter, out } = authSlice.actions
 
 export default authSlice.reducer
