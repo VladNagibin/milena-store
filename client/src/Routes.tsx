@@ -1,6 +1,7 @@
 import React from 'react'
-import { Routes, Route, Navigate, createBrowserRouter } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import AuthPage from './pages/AuthPage'
+import CartPage from './pages/CartPage'
 import MainPage from './pages/MainPage'
 import ProfilePage from './pages/ProfilePage'
 
@@ -8,9 +9,10 @@ export const useRoutes = (isAutheficated: boolean) => {
     if (isAutheficated) {
         return (
             <Routes>
-
-                <Route path='/' element={<MainPage />} />
+                
                 <Route path='/profile' element={<ProfilePage />} />
+                <Route path='/cart' element={<CartPage />} />
+                <Route path='/' element={<MainPage />} />
                 <Route path='*' element={<Navigate replace to="/" />} />
             </Routes>
         )

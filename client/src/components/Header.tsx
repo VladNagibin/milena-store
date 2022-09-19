@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../hooks/redux.hook'
 import { out } from '../reducers/authReducer'
 export default function Header() {
@@ -7,39 +7,77 @@ export default function Header() {
   const dispatch = useAppDispatch()
 
   return (
-    <div className='navigation'>
-      <ul>
-        <li className='list'>
-          <Link to={'/'}><span className="material-symbols-outlined icon">
-            home
-          </span>
-          <span className='text'>Домой</span></Link>
-        </li>
-        {login ?
-          <><li className='list'>
-            <Link to={'/profile'}>
-              <span className="material-symbols-outlined icon">
-                person
-              </span>
-              <span className='text'>Профиль</span></Link>
-          </li>
-          </> :
-          <li className='list'>
-            <Link to={'/auth'}>
-              <span className="material-symbols-outlined icon">
-                login
-              </span>
-              <span className='text'>Вход</span></Link>
-          </li>}
-      </ul>
+    <div className='header'>
+      <div className='panel'>
+        <div className='navigation'>
+          <ul>
+            <NavLink to={'/'} end >
+              {({ isActive }) => {
+                return <li className={`list ${isActive ? 'active' : ''}`}>
+                  <div><span className="material-symbols-outlined icon">
+                    home
+                  </span>
+                    <span className='text'>Домой</span></div>
+                </li>
+              }}
 
-      {login?<div>Ваш логин: {login}
-        <button onClick={() => {
-          dispatch(out())
-        }}>Выйти
-        </button>
-      </div>:<></>}
+            </NavLink>
+            {login ?
+              <><NavLink to={'/profile'} >
+                {({ isActive }) => {
+                  return <li className={`list ${isActive ? 'active' : ''}`}>
+                    <div>
+                      <span className="material-symbols-outlined icon">
+                        person
+                      </span>
+                      <span className='text'>Профиль</span></div>
+                  </li>
+                }}
 
-    </div>
+              </NavLink>
+                <NavLink to={'/cart'} >
+                  {({ isActive }) => {
+                    return <li className={`list ${isActive ? 'active' : ''}`}>
+                      <div>
+                        <span className="material-symbols-outlined icon">
+                          shopping_cart
+                        </span>
+                        <span className='text'>Корзина</span></div>
+                    </li>
+                  }}
+
+                </NavLink>
+              </>
+              :
+              <NavLink to={'/auth'}>
+                {({ isActive }) => {
+                  return <li className={`list ${isActive ? 'active' : ''}`}>
+                    <div>
+                      <span className="material-symbols-outlined icon">
+                        login
+                      </span>
+                      <span className='text'>Вход</span></div>
+                  </li>
+                }}
+
+              </NavLink>}
+            <div className='indicator'></div>
+          </ul>
+        </div>
+        <div className='right'>
+          <div className='logo'></div>
+          {
+            login?<div className='out-button' onClick={() => { dispatch(out()) }}>
+            <span className="material-symbols-outlined" >
+              logout
+            </span>
+            Выйти
+          </div>:<></>
+          }
+          
+        </div>
+
+      </div>
+    </div >
   )
 }

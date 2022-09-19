@@ -26,8 +26,23 @@ export class CategoriesService {
         }
         return this.categoryRepository.findBy({parent:parentCategory})
     }
+
+    async getTreeOfCategories(id:number|null):Promise<any[]>{
+        console.log(id)
+        return this.categoryRepository.createQueryBuilder('category')
+        .innerJoinAndSelect((subQuery)=>{
+            return subQuery
+            .select()
+            .from(Category,'category')
+            .where(id?'category.id =id':'category.parentId is null')
+        },'parent','category.parentId = parent.id')
+        .where('parent.id is not null')
+        .orderBy('parent.id')
+        .getRawMany()
+    }
+
     getOne(id:number):Promise<Category>{
-        return this.categoryRepository.createQueryBuilder('category').leftJoinAndSelect('category.products','product').where(`category.id = ${id}`).getOne()
+        return this.categoryRepository.createQueryBuilder('category').leftJoinAndSelect('category.products','product').where('category.id = :id',{id}).getOne()
     }
 
     async createOne(data:NewCategory):Promise<Category>{

@@ -10,8 +10,17 @@ export class CategoriesController {
         return this.categoriesService.getAllParentWithChild()
     }
 
+    @Get('tree')
+    getTreeOfParent(){
+        return this.categoriesService.getTreeOfCategories(null)
+    }
+    @Get('/tree/:id')
+    getTreeOfCategories(@Param('id') id:number){
+        return this.categoriesService.getTreeOfCategories(id)
+    }
+
     @Get(':id')
-    getOne(@Param() id:number){
+    getOne(@Param('id') id:number){
         return this.categoriesService.getOne(id)
     }
 
