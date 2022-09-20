@@ -22,6 +22,17 @@ export default function Header() {
               }}
 
             </NavLink>
+            <NavLink to={'/catalog'} >
+              {({ isActive }) => {
+                return <li className={`list ${isActive ? 'active' : ''}`}>
+                  <div><span className="material-symbols-outlined icon">
+                    category
+                  </span>
+                    <span className='text'>Каталог</span></div>
+                </li>
+              }}
+
+            </NavLink>
             {login ?
               <><NavLink to={'/profile'} >
                 {({ isActive }) => {

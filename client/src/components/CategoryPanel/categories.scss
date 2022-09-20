@@ -1,0 +1,25 @@
+.categories {
+    background-color: $clr-c;
+    display: flex;
+    justify-content: center;
+    border-radius: 10px;
+    padding: 15px;
+    color: $clr;
+    
+    .parent {
+        width: 50%;
+    }
+
+    .child {
+        width: 50%;
+    }
+    .category{
+        transition: 0.5s;
+        border-radius: 10px;
+        cursor: pointer;
+        padding: 10px;
+    }
+    .category:hover {
+        background-color: $dark-c;
+    }
+}

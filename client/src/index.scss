@@ -1,9 +1,9 @@
 $clr: rgb(242, 230, 247);
 $clr-b: #96CEC8;
-$clr-c: #BE9ED4;
+$clr-c: #8488C5;
 $dark-c:#22004D;
 @import './components/header.scss';
-
+@import './components/CategoryPanel/categories.scss';
 * {
     margin: 0;
     padding: 0;
@@ -38,7 +38,7 @@ body {
         width: 98%;
         border-radius: 10px;
         height: 70px;
-        background-color: #8488C5;
+        background-color: $clr-c;
         .right{
             display: flex;
             align-items: center;

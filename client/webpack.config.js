@@ -27,6 +27,11 @@ module.exports = {
                 target: 'http://localhost:3000',
                 router: () => 'http://localhost:5000',
                 logLevel: 'debug' /*optional*/
+            },
+            '/categories': {
+                target: 'http://localhost:3000',
+                router: () => 'http://localhost:5000',
+                logLevel: 'debug' /*optional*/
             }
         }
     },
