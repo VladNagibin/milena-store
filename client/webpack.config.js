@@ -11,16 +11,21 @@ module.exports = {
     },
     output: {
         filename: '[name].client.js',
+        publicPath: '/',
         path: path.resolve(__dirname, '../dist/public')
     },
     resolve: {
         extensions: ['.tsx', '.ts', '.jsx', '.js']
     },
+    
     devServer: {
         port: 3000,
         historyApiFallback: true,
         static: {
-            directory: path.join(__dirname, 'public')
+            directory: __dirname,
+            staticOptions:{
+                redirect:true
+            }
         },
         proxy: {
             '/users': {
@@ -31,7 +36,8 @@ module.exports = {
             '/categories': {
                 target: 'http://localhost:3000',
                 router: () => 'http://localhost:5000',
-                logLevel: 'debug' /*optional*/
+                logLevel: 'debug'
+                
             }
         }
     },

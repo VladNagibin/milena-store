@@ -40,18 +40,6 @@ export class CategoriesService {
             .where(id ? `category.parentId =${id}` : 'category.parentId is null')
             .orderBy('category.id')
             .getRawMany()
-        //return data
-        
-        // await this.categoryRepository.createQueryBuilder('category')
-        //     .leftJoinAndSelect((subQuery) => {
-        //         return subQuery
-        //             .select()
-        //             .from(Category, 'category')
-        //             .where(id ? `category.parentId =${id}` : 'category.parentId is null')
-        //     }, 'parent', 'parent.id = category.parentId')
-        //     .where('parent.id is not null')
-        //     .orderBy('parent.id')
-        //     .getRawMany()
         var result: TreeCategories[] = []
         if (data.length == 0) {
             return []

@@ -14,6 +14,7 @@ export const useRoutes = (isAutheficated: boolean) => {
                 <Route path='/profile' element={<ProfilePage />} />
                 <Route path='/cart' element={<CartPage />} />
                 <Route path='/catalog' element={<CatalogPage />} />
+                <Route path='/catalog/:id' element={<CatalogPage />} />
                 <Route path='/' element={<MainPage />} />
                 <Route path='*' element={<Navigate replace to="/" />} />
             </Routes>
@@ -22,6 +23,7 @@ export const useRoutes = (isAutheficated: boolean) => {
     return (
         <Routes>
             <Route path='/catalog' element={<CatalogPage />} />
+            <Route path='/catalog/:id' element={<CatalogPage />} />
             <Route path='/' element={<MainPage />} />
             <Route path='/auth' element={<AuthPage />} />
             <Route path='*' element={<Navigate replace to="/" />} />

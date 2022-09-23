@@ -7,6 +7,8 @@ export default function ChildCategory({category}:ChildCategoryProps) {
   return (
     <div className='category'>
       {category.name}
+      <br/>
+      <span>Смотреть все</span>
     </div>
   )
 }

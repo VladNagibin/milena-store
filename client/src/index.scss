@@ -4,6 +4,7 @@ $clr-c: #8488C5;
 $dark-c:#22004D;
 @import './components/header.scss';
 @import './components/CategoryPanel/categories.scss';
+@import './components/loader.scss';
 * {
     margin: 0;
     padding: 0;
@@ -75,3 +76,4 @@ a {
     text-decoration: none;
     color: inherit;
 }
+
