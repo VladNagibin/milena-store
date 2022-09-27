@@ -1,0 +1,172 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap');
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5;
+}
+
+.container{
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+/* loader */
+.lds-ring {
+  width: 100%;
+  margin: 8% auto;
+  width: 160px;
+  height: 160px;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 160px;
+  height: 160px;
+
+  border: 8px solid #fff;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: black transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+/* loader - end */
+
+/* navbar */
+
+header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30px 10%;
+}
+
+.header li{
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: rgba(174, 0, 255, 1);
+}
+.header a{
+  text-decoration: none;
+}
+header button{
+  padding: 9px 25px;
+  background-color: var(--clr-c);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition:all 0.3s ease 0s ;
+  background-color: rgba(174, 0, 255, 0.5);
+}
+header button:hover{
+  color: rgba(174, 0, 255, 0.5);
+  background-color: rgba(174, 0, 255, 0.2);
+}
+.logo{
+  cursor: pointer;
+}
+
+.nav_links{
+  list-style: none;
+}
+.nav_links li{
+  display: inline-block;
+  padding: 0px 20px;
+}
+.nav_links li a{
+  transition:all 0.3s ease 0s;
+  color: rgba(174, 0, 255, 1);
+}
+.nav_links li a:hover{
+  color: rgba(174, 0, 255, 0.5);
+}
+/* navbar - end */
+
+/* main page */
+.main_buttons{
+  display: flex;
+  flex-direction: column;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.top_buttons{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.bot_buttons{
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+}
+
+.main_button{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid blueviolet;
+  border-radius: 10px;
+  width: 200px;
+  height: 80px;
+  margin-right: 20px;
+}
+
+.main_button:last-child{
+  margin-right: 0;
+}
+/* main page - end */
+
+/* modal window */
+.modal_window{
+  position: absolute;
+  background-color: black;
+  opacity: 50%;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+
+}
+
+.modal_window_border{
+  width: 500px;
+  padding: 5px;
+  border-radius: 10px;
+  background-color: white;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 45%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+/* create item form*/
+.create_item_form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

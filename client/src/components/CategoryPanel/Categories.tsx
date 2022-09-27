@@ -1,29 +1,50 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useHttp } from '../../hooks/http.hook'
 import ICategory, { IChildCategory } from '../../interfaces/ICategory'
+import ICategoryTree from '../../interfaces/ICategoryQuery'
 import ChildCategory from './ChildCategory'
 import ParentCategory from './ParentCategory'
 
 interface CategoriesProps {
-  categories: ICategory[]
+  id: string | undefined
 }
 
 
-export default function Categories({ categories }: CategoriesProps) {
-  const [show,setShow] = useState(false)
-  const handleShow = () =>{
-    setShow(prev=>!prev)
+export default function Categories({ id }: CategoriesProps) {
+  const [categories, setCategories] = useState<ICategory[]>([])
+  const [childCategories, setChildCategories] = useState<IChildCategory[]>([])
+  const [show, setShow] = useState(false)
+  const {request,loading} = useHttp()
+  const handleShow = () => {
+    setShow(prev => !prev)
   }
-  if (categories.length === 0) {
+  const getCategories = async (controller: AbortController) => {
+    try {
+      const data = await request<ICategory[]>(`/categories/tree${id ? `/${id}` : ''}`, 'GET', null, {}, controller.signal)
+      setCategories(data)
+      setShow(!!data.length)
+    } catch (e) {
+      alert(e)
+    }
+  }
+
+  useEffect(() => {
+    let controller = new AbortController()
+    getCategories(controller)
+    return (() => {
+      controller.abort()
+    })
+  }, [id])
+  if (loading) {
     return <></>
   }
-  const [childCategories, setChildCategories] = useState<IChildCategory[]>(categories[0].categories)
   return (
     <><div className={`hide-button ${show ? 'rotated' : ''}`} onClick={handleShow}>
       <span className="material-symbols-outlined">
         expand_more
       </span>
     </div>
-      <div className={`${show?'categories':'hide'}`} onMouseLeave={() => setChildCategories(categories[0].categories)}>
+      <div className={`${show ? 'categories' : 'hide'}`} onMouseLeave={() => setChildCategories([])}>
         <div className='parent'>
           {
             categories.map(category => {

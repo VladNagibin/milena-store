@@ -1,42 +1,53 @@
 import { useParams } from 'react-router-dom'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import Categories from '../components/CategoryPanel/Categories'
 import Loader from '../components/Loader'
 import { useHttp } from '../hooks/http.hook'
-import ICategory from '../interfaces/ICategory'
+import IProduct from '../interfaces/IProduct'
+import ICategoryQuery from '../interfaces/ICategoryQuery'
+import Products from '../components/Products/Products'
 
 
 
 export default function CatalogPage() {
     const { request, loading } = useHttp()
-    const [categories, setCategories] = useState<ICategory[]>([])
+    const [products, setProducts] = useState<IProduct[]>([])
+    const [name,setName] = useState<string>('Каталог')
     const id = useParams().id
-     //request('http://localhost:5000/categories/tree','GET')
-    const getCategories = async (controller: AbortController) => {
+    const getCategories = useCallback(async (controller: AbortController) => {
         try {
-            const data = await request<ICategory[]>(`/categories/tree${id?`/${id}`:''}`, 'GET', null, {}, controller.signal)
-            setCategories(data)
+            const data = await request<ICategoryQuery>(`/categories${id ? `/${id}` : ''}`, 'GET', null, {}, controller.signal)
+            console.log(`/categories ${id ? `/${id}` : ''}`)
+            setProducts(data.products)
+            setName(data.name)
         } catch (e) {
             alert(e)
         }
-    }
-    
+    },[id])
+
     useEffect(() => {
-        let controller = new AbortController()
-        getCategories(controller)
+        let controller = new AbortController()            
+        if (id) {
+            getCategories(controller)
+        }else{
+            setProducts([])
+            setName('Каталог')
+        }
         return (() => {
             controller.abort()
         })
-    }, [])
+
+    }, [id])
     if (loading) {
         return (
-            <Loader/>
+            <Loader />
         )
     }
     return (
-        <div>
-            <h1>Каталог</h1>
-            <Categories categories={categories} />
+        <div className='catalog-page'>
+            <h1>{name}</h1>
+            <Categories id={id} />
+            <Products products={products}/>
         </div>
     )
 }

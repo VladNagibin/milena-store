@@ -14,14 +14,21 @@
         font-size: 30px;
     }
 
-    
+
 }
+
+.catalog-page {
+    animation: fromRight 1s;
+}
+
 .rotated {
     transform: rotate(180deg);
 }
+
 .categories {
     background-color: $clr-c;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     border-radius: 10px;
     padding: 15px;
@@ -29,16 +36,24 @@
     color: $clr;
 
     .parent {
-        width: 30%;
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+
+        a {
+            width: 100%;
+            text-align: center;
+        }
     }
 
     .child {
-        width: 70%;
+        width: 100%;
         display: flex;
         flex-wrap: wrap;
 
-        div {
-            width: 50%;
+        a {
+            text-align: center;
+            width: 33%;
 
             span {
                 font-size: 13px;
@@ -57,14 +72,31 @@
         background-color: $dark-c;
     }
 }
+
 @keyframes show {
-    0%{
+    0% {
         max-height: 50px;
     }
-    100%{
+
+    100% {
         max-height: 1000px;
     }
 }
+
+@keyframes fromRight {
+    0% {
+        position: relative;
+        left: 1000px;
+    }
+    99%{
+        position: relative;
+        left: 0px;
+    }
+    100%{
+        position: initial;
+    }
+}
+
 .hide {
     display: none;
 }

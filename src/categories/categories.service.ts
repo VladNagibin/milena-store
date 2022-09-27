@@ -28,15 +28,16 @@ export class CategoriesService {
         return this.categoryRepository.findBy({ parent: parentCategory })
     }
 
+
+
     async getTreeOfCategories(id: number | null): Promise<TreeCategories[]> {
-        var data = 
-        await this.categoryRepository.createQueryBuilder('category')
-            .leftJoinAndSelect((subQuery)=>{
+        var data = await this.categoryRepository.createQueryBuilder('category')
+            .leftJoinAndSelect((subQuery) => {
                 return subQuery
                     .select()
-                    .from(Category,'category')
+                    .from(Category, 'category')
                     .where('category.parentId is not null')
-            },'child','child.\"parentId\" = category.id')
+            }, 'child', 'child.\"parentId\" = category.id')
             .where(id ? `category.parentId =${id}` : 'category.parentId is null')
             .orderBy('category.id')
             .getRawMany()
@@ -53,12 +54,13 @@ export class CategoriesService {
                 parentId: null | number
             }> = []
             dataWithId.forEach(elem => {
-                if(elem.id !== null){
-                categories.push({
-                    id: elem.id,
-                    name: elem.name,
-                    parentId: elem.parentId
-                })}
+                if (elem.id !== null) {
+                    categories.push({
+                        id: elem.id,
+                        name: elem.name,
+                        parentId: elem.parentId
+                    })
+                }
             })
             result.push({
                 name: dataWithId[0].category_name,
@@ -68,7 +70,8 @@ export class CategoriesService {
             })
             filteredData = filteredData.filter(elem => elem.category_id !== filteredData[0].category_id)
         }
-        return result
+        return (result)
+
     }
 
     getOne(id: number): Promise<Category> {

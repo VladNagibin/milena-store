@@ -19,22 +19,22 @@ module.exports = {
     },
     
     devServer: {
-        port: 3000,
+        port: 2000,
         historyApiFallback: true,
         static: {
-            directory: __dirname,
+            directory: path.resolve(__dirname,'public'),
             staticOptions:{
                 redirect:true
             }
         },
         proxy: {
             '/users': {
-                target: 'http://localhost:3000',
+                target: 'http://localhost:2000',
                 router: () => 'http://localhost:5000',
                 logLevel: 'debug' /*optional*/
             },
             '/categories': {
-                target: 'http://localhost:3000',
+                target: 'http://localhost:2000',
                 router: () => 'http://localhost:5000',
                 logLevel: 'debug'
                 
