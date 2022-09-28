@@ -4,6 +4,7 @@ import AuthPage from './pages/AuthPage'
 import CartPage from './pages/CartPage'
 import CatalogPage from './pages/CatalogPage'
 import MainPage from './pages/MainPage'
+import ProductPage from './pages/ProductPage'
 import ProfilePage from './pages/ProfilePage'
 
 export const useRoutes = (isAutheficated: boolean) => {
@@ -15,6 +16,7 @@ export const useRoutes = (isAutheficated: boolean) => {
                 <Route path='/cart' element={<CartPage />} />
                 <Route path='/catalog' element={<CatalogPage />} />
                 <Route path='/catalog/:id' element={<CatalogPage />} />
+                <Route path='/catalog/product/:id' element={<ProductPage />} />
                 <Route path='/' element={<MainPage />} />
                 <Route path='*' element={<Navigate replace to="/" />} />
             </Routes>
@@ -24,6 +26,7 @@ export const useRoutes = (isAutheficated: boolean) => {
         <Routes>
             <Route path='/catalog' element={<CatalogPage />} />
             <Route path='/catalog/:id' element={<CatalogPage />} />
+            <Route path='/catalog/product/:id' element={<ProductPage />} />
             <Route path='/' element={<MainPage />} />
             <Route path='/auth' element={<AuthPage />} />
             <Route path='*' element={<Navigate replace to="/" />} />

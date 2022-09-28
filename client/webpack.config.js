@@ -17,16 +17,24 @@ module.exports = {
     resolve: {
         extensions: ['.tsx', '.ts', '.jsx', '.js']
     },
-    
+
     devServer: {
         port: 2000,
         historyApiFallback: true,
-        static: {
-            directory: path.resolve(__dirname,'public'),
-            staticOptions:{
-                redirect:true
+        static: [{
+            directory: path.resolve(__dirname, 'public'),
+            publicPath: '/',
+            staticOptions: {
+                redirect: true
             }
-        },
+        }, {
+            directory: path.resolve(__dirname, '../public'),
+            publicPath: '/',
+            staticOptions: {
+                redirect: true
+            }
+        }
+        ],
         proxy: {
             '/users': {
                 target: 'http://localhost:2000',
@@ -37,7 +45,13 @@ module.exports = {
                 target: 'http://localhost:2000',
                 router: () => 'http://localhost:5000',
                 logLevel: 'debug'
-                
+
+            },
+            '/products': {
+                target: 'http://localhost:2000',
+                router: () => 'http://localhost:5000',
+                logLevel: 'debug'
+
             }
         }
     },
@@ -55,7 +69,7 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.css$/, 
+                test: /\.css$/,
                 use: [
                     {
                         loader: MiniCssExtractPlugin.loader
