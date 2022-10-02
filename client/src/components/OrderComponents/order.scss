@@ -1,0 +1,108 @@
+
+.address{
+    padding: 15px;
+    margin-top: 20px;
+    border: 4px solid $dark-c;
+    border-radius: 20px;
+    text-align: center;
+    display: flex;
+    
+    .private-house{
+        font-size: 20px;
+        input{
+            height: 20px;
+            width: 20px;
+        }
+    }
+    input{
+        margin: 10px;
+        padding: 10px;
+        font-size: 20px;
+        background-color: $clr;
+        border: 2px solid $dark-c;
+        border-radius: 20px;
+    }
+    input:disabled{
+        background-color: $clr-hover;
+    }
+}
+.order-data{
+    h2{
+        margin-top: 20px;
+    }
+    span{
+        margin: 0 5px 0 5px;
+    }
+    button{
+        padding: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.3s;
+        font-size: 0px;
+        min-width: 50px;
+        height: 50px;
+        border-radius: 30px;
+        background-color: $dark-c;
+        color: $clr;
+    }
+    button:hover{
+        font-size: 15px;
+    }
+    .top-panel{
+        display: flex;
+        justify-content: space-between;
+        
+    }
+    .bottom-panel{
+        margin-top: 20px;
+        display: flex;
+        justify-content: flex-end;
+        
+    }
+}
+.contact-fields{
+    padding: 15px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 4px solid $dark-c;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    .unable{
+        background-color: $clr-hover;
+    }
+    .buttons{
+        width: 100px;
+        display: flex;
+        justify-content: flex-start;
+        
+        .icon{
+            transition: 0.3s;
+            margin: 5px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            background-color: $dark-c;
+            color: $clr;
+        }
+        .hide{
+            width: 0px;
+            height: 0px;
+        }
+    }    
+    
+    input{
+        margin: 10px;
+        padding: 10px;
+        font-size: 20px;
+        background-color: $clr;
+        border: 2px solid $dark-c;
+        border-radius: 20px;
+    }
+    
+}

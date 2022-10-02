@@ -20,7 +20,7 @@ export class OrdersService {
         private productRepository: Repository<Product>
     ) { }
     getById(id: number): Promise<Order> {
-        return this.orderRepository.createQueryBuilder('order').leftJoinAndSelect('product.orders', 'products').where(`order.id = ${id}`).getOne()
+        return this.orderRepository.createQueryBuilder('order').leftJoinAndSelect('order.products', 'products').where(`order.id = ${id}`).getOne()
     }
 
     async createNew(data: NewOrder): Promise<Order | Error> {
@@ -31,7 +31,13 @@ export class OrdersService {
                 }, err => {
                     rej(err)
                 })
-            } else {
+            } else if(typeof data.user == 'string') {
+                this.userRepository.findOneBy({ login: data.user }).then(user => {
+                    res(user)
+                }, err => {
+                    rej(err)
+                })
+            } else{
                 res(data.user)
             }
         })
@@ -68,7 +74,8 @@ export class OrdersService {
                 products: productsOrder,
                 user: userOrder,
                 status: 'created',
-                cost,
+                address:data.address,
+                cost
             })
         } catch (e) {
             return new HttpException(e,HttpStatus.BAD_REQUEST)

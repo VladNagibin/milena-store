@@ -8,6 +8,9 @@ $dark-c:#22004D;
 @import './components/CategoryPanel/categories.scss';
 @import './components/loader.scss';
 @import './components/Products/products.scss';
+@import './components/CartProducts/cart-products.scss';
+@import './components/OrderComponents/order.scss';
+@import './components/OrderList/orderList.scss';
 * {
     margin: 0;
     padding: 0;
@@ -82,6 +85,7 @@ a {
 .product-page{
     display: flex;
     flex-direction: column;
+    animation: fromRight 1s;
     .name{
         font-size: 32px;
         font-weight: bold;
@@ -97,6 +101,7 @@ a {
             object-fit: contain;
         }
         .specs{
+            min-width: 330px;
             h3{
                 margin: 20px;
                 text-align: center;
@@ -117,7 +122,7 @@ a {
                 display: flex;
                 justify-content: center;
                 font-size: 30px;
-                margin-bottom: 20px;
+                //margin-bottom: 20px;
                 .icon{
                     font-size: 35px;
                     font-weight: bold;
@@ -127,6 +132,61 @@ a {
                     margin: 0 30px 0 30px;
                 }
             }
+            .bottom{
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                //margin-bottom: 20px;
+                padding-left: 10px;
+                .price{
+                    border-radius: 20px;
+                    padding: 2px;
+                    border: 3px solid $dark-c;
+                    display: flex;
+                    font-size: 25px;
+                    .value{
+                        // margin: 0 0 20px 20px;
+                        display: flex;
+                        align-items: center;
+                    }
+                    .discount{
+                        // border: 6px solid $clr-b;
+                        // margin-bottom: 10px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        height: 60px;
+                        width: 60px;
+                        margin-left: 10px;
+                        background-color: $clr-b;
+                        border-radius: 50%;
+                    }
+                }
+            }
+        }   
+    }
+    .description{
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        .banner{
+            background-color: $clr-hover;
+            border-radius: 20px;
+            padding: 10px;
+            border: 3px solid $dark-c;
+            width: 50%;
         }
+    }
+}
+
+.empty-cart{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 32px;
+    padding-top: 200px;
+    .icon{
+        font-size: 100px;
     }
 }

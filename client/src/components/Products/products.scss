@@ -3,7 +3,7 @@
     color: $clr;
     border-radius: 20px;
     width: 30%;
-    margin: 0 1.5% 0 1.5%;
+    margin: 0 1.5% 1.5% 1.5%;
     padding: 10px 1.5% 10px 1.5%;
     display: flex;
     flex-direction: column;
@@ -23,7 +23,7 @@
     .bottom-panel {
         display: flex;
         justify-content: space-between;
-        .cart{
+        .cart-buttons{
             width: 78px;
             display: flex;
             justify-content: space-between;

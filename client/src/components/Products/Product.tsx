@@ -3,14 +3,12 @@ import { Link } from 'react-router-dom'
 import { useAppDispatch } from '../../hooks/redux.hook'
 import IProduct from '../../interfaces/IProduct'
 import { add } from '../../reducers/cartReducer'
+import CartButtons from './CartButtons'
 interface IProductProps {
   product: IProduct
-  counter: number
 }
 
-export default function Product({ product, counter }: IProductProps) {
-  const dispatch = useAppDispatch()
-  console.log(product.price)
+export default function Product({ product }: IProductProps) {
   return (
     <div className='product'>
       <Link to={`/catalog/product/${product.id}`}>
@@ -19,23 +17,10 @@ export default function Product({ product, counter }: IProductProps) {
       <span className='name'>{product.name}</span>
       <div className='bottom-panel'>
         <div className='price'>
-          {/* <span>{product.discount}</span> */}
           <span>{product.price}p</span>
         </div>
-        <div className='cart'>
-          <span className="material-symbols-outlined icon" onClick={() => dispatch(add({ ...product, count: counter + 1 }))}>
-            add
-          </span>
-          <div className='counter'>
-            {counter}
-          </div>
-          <span className="material-symbols-outlined icon" onClick={() => dispatch(add({ ...product, count: counter - 1 }))}>
-            remove
-          </span>
-        </div>
-
+        <CartButtons product={product}/>
       </div>
-      {/* <span>{product.description}</span> */}
     </div>
   )
 }

@@ -71,13 +71,24 @@ export class UsersService {
     }
 
     
-    getAllOrders(id:number):Promise<User>{
-        return this.usersRepository.createQueryBuilder('users').leftJoinAndSelect('users.orders','user').where(`users.id = ${id}`).getOne()//findOneBy({id})
+    getAllOrders(login:string):Promise<User>{
+        return this.usersRepository.createQueryBuilder('users').leftJoinAndSelect('users.orders','order').where(`users.login = :login`,{login}).getOne()//findOneBy({id})
     }
 
+    async setContactInfo(login:string,email:string|undefined,phone:number|undefined ){
+        var user = await this.usersRepository.findOneBy({login})
+        if(email){
+            user.email = email
+        }
+        if(phone){
+            user.phone = phone
+        } 
+        return this.usersRepository.save(user)
 
-    findOne(id: number): Promise<User> {
-        return this.usersRepository.findOneBy({ id })
+    }
+
+    findOne(login: string): Promise<User> {
+        return this.usersRepository.findOneBy({ login:login })
     }
     async remove(id: number): Promise<void> {
         await this.usersRepository.delete(id)

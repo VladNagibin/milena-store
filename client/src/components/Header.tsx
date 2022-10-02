@@ -5,7 +5,7 @@ import { out } from '../reducers/authReducer'
 export default function Header() {
   const { login } = useAppSelector(state => state.auth)
   const dispatch = useAppDispatch()
-
+  const lenght = useAppSelector(state=>state.cart.products.length)
   return (
     <div className='header'>
       <div className='panel'>
@@ -33,6 +33,21 @@ export default function Header() {
               }}
 
             </NavLink>
+            <NavLink to={'/cart'} >
+                  {({ isActive }) => {
+                    return <li className={`list ${isActive ? 'active' : ''}`}>
+                      <div>
+                        
+                        <span className="material-symbols-outlined icon">
+                        {
+                          lenght?"shopping_cart_checkout":"shopping_cart"
+                        }
+                        </span>
+                        <span className='text'>Корзина</span></div>
+                    </li>
+                  }}
+
+                </NavLink>
             {login ?
               <><NavLink to={'/profile'} >
                 {({ isActive }) => {
@@ -46,18 +61,6 @@ export default function Header() {
                 }}
 
               </NavLink>
-                <NavLink to={'/cart'} >
-                  {({ isActive }) => {
-                    return <li className={`list ${isActive ? 'active' : ''}`}>
-                      <div>
-                        <span className="material-symbols-outlined icon">
-                          shopping_cart
-                        </span>
-                        <span className='text'>Корзина</span></div>
-                    </li>
-                  }}
-
-                </NavLink>
               </>
               :
               <NavLink to={'/auth'}>

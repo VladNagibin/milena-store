@@ -3,15 +3,12 @@ import React, { useCallback, useEffect, useState } from 'react'
 import Loader from '../components/Loader'
 import { useHttp } from '../hooks/http.hook'
 import IProductDetailed from '../interfaces/IProductDetailed'
-import { useAppDispatch, useAppSelector } from '../hooks/redux.hook'
-import { add } from '../reducers/cartReducer'
+import CartButtons from '../components/Products/CartButtons'
 
 export default function ProductPage() {
     const id = useParams().id
     const [product, setProduct] = useState<IProductDetailed | null>(null)
     const { request, loading } = useHttp()
-    const cart = useAppSelector(state=>state.cart.products)
-    const dispatch = useAppDispatch()
     const getProduct = useCallback(async (signal: AbortSignal) => {
         const data = await request<IProductDetailed>(`/products/${id}`, 'GET', null, {}, signal)
         setProduct(data)
@@ -27,8 +24,7 @@ export default function ProductPage() {
     if (loading || product == null) {
         return <Loader />
     }
-    const counter = cart.length?cart.filter(el=>el.id === product.id)[0].count:0
-
+    
     return (
         <div className='product-page'>
             <div className='name'>
@@ -45,26 +41,27 @@ export default function ProductPage() {
                             })
                         }
                     </div>
-                    <div className='cart-buttons'>
-                        <span className="material-symbols-outlined icon" onClick={() => dispatch(add({ ...product, count: counter + 1 }))}>
-                            add
-                        </span>
-                        <div className='counter'>
-                            {counter}
+                    <div className='bottom'>
+                        <div className='price'>
+                            <div className='value'>
+                                {product.price}р
+                            </div>
+                            <div className='discount'>
+                                -{product.discount}%
+                            </div>
                         </div>
-                        <span className="material-symbols-outlined icon" onClick={() => dispatch(add({ ...product, count: counter - 1 }))}>
-                            remove
-                        </span>
+                        <CartButtons product={product}/>
                     </div>
                 </div>
 
             </div>
+            <h2>Описание</h2>
             <div className='description'>
                 <div className='desc-value'>
                     {product.description}
                 </div>
                 <div className='banner'>
-
+                    Товары представлены в ассортименте, выбор цветов или моделей не предоставляется. На фотографиях могут быть представлены не все варианты.
                 </div>
             </div>
             <div className='similar-products'>

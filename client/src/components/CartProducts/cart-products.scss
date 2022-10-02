@@ -1,0 +1,112 @@
+.cart-products{
+    margin-top: 50px;
+}
+.cart-product{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 20px;
+    padding: 10px 0 10px 0;
+    border-bottom: 1px solid $dark-c;
+    .pic{
+        height: 80px;
+        width: 200px;
+        object-fit: contain;
+    }
+    .name{
+        width: 200px;
+        text-align: left;
+    }
+    .discount{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: $clr-b;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+    }
+    .cart-buttons{
+        display: flex;
+        .icon{
+            font-size: 32px;
+            background-color: $dark-c;
+            color: $clr;
+            border-radius: 50%;
+            margin: 0 20px 0 20px;
+        }
+        .counter{
+            font-size: 26px;
+        }
+    }
+}
+.pre-delete{
+    display: flex;
+    padding: 30px 70px 34px 0;
+    justify-content: flex-end;
+    border-bottom: 1px solid $dark-c;
+    button{
+        cursor: pointer;
+        transition: 0.3s;
+        margin-left: 20px;
+        background-color: $dark-c;
+        color: $clr;
+        width: 70px;
+        height: 40px;
+        border-radius: 10px;
+    }
+    button:hover{
+        box-shadow: 3px 3px $clr-hover;
+    }
+}
+
+.summary{
+    display: flex;
+    justify-content: space-between;
+    padding: 30px 15px 0 15px;
+    .summ{
+        display: flex;
+        .text{
+            font-size: 32px;
+            margin-right: 15px;
+        }
+        .value{
+            margin-top: 6px;
+            font-size: 26px;
+            .small-text{
+                font-size: 13px;
+            }
+        }
+    }
+    .buttons{
+        width: 234px;
+        button{
+            transition: 0.3s;
+            font-size: 17px;
+            background-color: $dark-c;
+            color: $clr;
+            border-radius: 20px;
+            width: 90px;
+            height: 40px;
+            margin-left: 15px;
+            margin-right: 10px;
+        }
+        button:hover{
+            box-shadow: 3px 3px $clr-hover;
+        }
+    }
+}
+.confirm-panel{
+    border: 2px $dark-c solid;
+    // animation: fromRight 0.3s;
+    border-radius: 20px;
+    margin-top: 10px;
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    a{
+        margin-bottom: 10px;
+    }
+      
+}

@@ -4,6 +4,7 @@ import Category from 'src/entities/category.entity';
 import { DeleteResult, Repository } from 'typeorm';
 import { ChangeCategory } from './dto/change-category.dto';
 import { NewCategory } from './dto/new-category.dto';
+import { OneCategory } from './dto/one-category.dto';
 import { TreeCategories } from './dto/tree-categories.dto';
 
 @Injectable()
@@ -74,8 +75,40 @@ export class CategoriesService {
 
     }
 
-    getOne(id: number): Promise<Category> {
-        return this.categoryRepository.createQueryBuilder('category').leftJoinAndSelect('category.products', 'product').where('category.id = :id', { id }).getOne()
+    async getOne(id: number): Promise<OneCategory > {
+        
+        let data = await this.categoryRepository.query(`with RECURSIVE r as (
+            select id, "parentId", name,1 as Level from category
+            where id = ${id}
+            
+            union 
+            select category.id, category."parentId", category.name, r.Level +1 from category 
+            join r on category."parentId" = r.id
+        )
+        
+        select r.name, r.id, r.level, product.id as product_id, product.name as product_name,product.price as product_price,product.discount as product_discount,product.description as product_description from r left join product on product."categoryId" = r.id order by r.level`)
+        if (!data.length) {
+            
+        }
+        let first = data[0]
+        let products = []
+        data.forEach(element => {
+            if (element.product_id) {
+                products.push({
+                    id:element.product_id,
+                    name:element.product_name,
+                    price:element.product_price,
+                    discount:element.product_discount,
+                    description:element.product_description,
+                })
+            }
+        })
+        let responce: OneCategory = {
+            id:first.id,
+            name:first.name,
+            products
+        }
+        return responce
     }
 
     async createOne(data: NewCategory): Promise<Category> {

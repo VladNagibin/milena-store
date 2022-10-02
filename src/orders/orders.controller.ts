@@ -2,7 +2,6 @@ import { Controller,Get, Post,Patch,Param,Body } from '@nestjs/common';
 import { NewOrder } from './dto/new-order.dto';
 import { OrdersService } from './orders.service';
 import Status from '../types/status'
-import { ChangeOrder } from './dto/change-order.dto';
 import Product from 'src/entities/product.entity';
 @Controller('orders')
 export class OrdersController {
@@ -18,7 +17,7 @@ export class OrdersController {
     }
 
     @Patch(':id/:status')
-    setStatus(@Param('id') id:number,@Param('status  ') status:Status){
+    setStatus(@Param('id') id:number,@Param('status') status:Status){
         return this.orderService.setStatus({
             id,
             status

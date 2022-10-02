@@ -6,7 +6,6 @@ import Property from 'src/entities/properties.entity';
 import { DeleteResult, Repository } from 'typeorm';
 import { ChangeProduct } from './dto/change-product.dto';
 import { NewProduct } from './dto/new-product.dto';
-import FormData from 'form-data'
 
 @Injectable()
 export class ProductsService {
@@ -29,10 +28,6 @@ export class ProductsService {
         //return this.productRepository.findOneBy({ id })
     }
 
-    saveProductImage(id:number, data:FormData){
-        console.log(data)
-    }
-    
     async create(data: NewProduct): Promise<Product> {
         let category = this.categoryRepository.findOneBy({ id: data.categoryId })
         let properties: Array<Promise<Property>> = []

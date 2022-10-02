@@ -17,6 +17,9 @@ export class Order{
     @Column()
     cost:number
 
+    @Column({nullable:true})
+    address:string
+
     @ManyToOne(type => User, user => user.orders,{onDelete:'SET NULL'})
     user:User
 

@@ -1,3 +1,4 @@
+import { type } from 'os';
 import {Entity, Column, PrimaryGeneratedColumn, OneToMany} from 'typeorm'
 import { Order } from './orders.entity';
 
@@ -15,7 +16,7 @@ export class User{
     @Column({nullable:true})
     email:string
 
-    @Column({nullable:true})
+    @Column({nullable:true ,type:'bigint'})
     phone:number
 
     @OneToMany(type=>Order, (order)=> order.user)

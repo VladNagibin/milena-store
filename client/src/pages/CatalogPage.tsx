@@ -17,7 +17,6 @@ export default function CatalogPage() {
     const getCategories = useCallback(async (controller: AbortController) => {
         try {
             const data = await request<ICategoryQuery>(`/categories${id ? `/${id}` : ''}`, 'GET', null, {}, controller.signal)
-            console.log(`/categories ${id ? `/${id}` : ''}`)
             setProducts(data.products)
             setName(data.name)
         } catch (e) {

@@ -52,6 +52,12 @@ module.exports = {
                 router: () => 'http://localhost:5000',
                 logLevel: 'debug'
 
+            },
+            '/orders': {
+                target: 'http://localhost:2000',
+                router: () => 'http://localhost:5000',
+                logLevel: 'debug'
+
             }
         }
     },

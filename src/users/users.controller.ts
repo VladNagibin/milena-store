@@ -1,5 +1,4 @@
-import { Controller, Get, Param ,Post,Body,Put,HttpCode, HttpStatus,HttpException} from '@nestjs/common';
-import { User } from 'src/entities/user.entity';
+import { Controller,Post,Body,Put,HttpCode, HttpStatus,HttpException} from '@nestjs/common';
 import { answer } from 'src/types/answer';
 import { Enter } from './dto/enter.dto';
 import { NewUser } from './dto/new-user.dto';
@@ -10,14 +9,7 @@ export class UsersController {
     constructor(private readonly usersService:UsersService){
 
     }
-    @Get(':id')
-    getOne(@Param('id') id:number):Promise<User>{
-        return this.usersService.findOne(id)
-    }
-    @Get('/orders/:id')
-    getAllOrders(@Param('id') id:number):Promise<User>{
-        return this.usersService.getAllOrders(id)
-    }
+    
 
     @Put()
     @HttpCode(HttpStatus.CREATED)

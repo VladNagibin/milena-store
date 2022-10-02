@@ -1,15 +1,10 @@
 import React from 'react'
-import { useAppSelector } from '../hooks/redux.hook'
+import CartProducts from '../components/CartProducts/CartProducts'
 
-export default function CartPage() {
-  const products = useAppSelector(state=>state.cart.products)
+export default function CartPage() {  
   return (
     <div>
-      {
-        products.map(product=>{
-          return <div key={product.id}>{product.name},{product.count}</div>
-        })
-      }
+      <CartProducts/>
     </div>
   )
 }
