@@ -1,10 +1,10 @@
 import React from 'react'
-import CartProducts from '../components/CartProducts/CartProducts'
+import CartProductsPanel from '../components/CartProducts/CartProductsPanel'
 
 export default function CartPage() {  
   return (
     <div>
-      <CartProducts/>
+      <CartProductsPanel/>
     </div>
   )
 }

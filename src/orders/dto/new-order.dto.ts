@@ -4,6 +4,10 @@ import { User } from "src/entities/user.entity"
 export class NewOrder{
     user:number|User|string
     address:string
-    products:Array<number|Product>
+    products:Array<CartProduct>
 
+}
+
+class CartProduct extends Product{
+    count:number
 }

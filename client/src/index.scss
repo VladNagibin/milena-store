@@ -11,6 +11,7 @@ $dark-c:#22004D;
 @import './components/CartProducts/cart-products.scss';
 @import './components/OrderComponents/order.scss';
 @import './components/OrderList/orderList.scss';
+@import './components/footer.scss';
 * {
     margin: 0;
     padding: 0;
@@ -29,6 +30,7 @@ body {
 .container{
     width: 70%;
     margin: auto;
+    min-height: calc(100vh - 180px);
 }
 
 .header {
@@ -188,5 +190,27 @@ a {
     padding-top: 200px;
     .icon{
         font-size: 100px;
+    }
+}
+.order-data{
+    font-size: 18px;
+    h1{
+        margin: 10px;
+    }
+    div{
+        margin: 10px;
+    }
+    .status-div{
+        display: flex;
+        align-items: center;
+    }
+    .date{
+        input{
+            font-size: 15px;
+            padding: 10px;
+            border: 2px solid $dark-c;
+            border-radius: 20px;
+            background-color: $clr;
+        }
     }
 }

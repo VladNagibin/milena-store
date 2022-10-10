@@ -1,7 +1,7 @@
 # compiled output
 /dist
 /node_modules
-
+Dockerfile
 # Logs
 logs
 *.log
@@ -16,6 +16,7 @@ lerna-debug.log*
 
 # Tests
 /coverage
+/public
 /.nyc_output
 
 # IDEs and editors

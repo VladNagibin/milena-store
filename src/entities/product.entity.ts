@@ -1,6 +1,7 @@
 import {Entity, Column, PrimaryGeneratedColumn, ManyToMany,ManyToOne,OneToMany} from 'typeorm'
 import Category from './category.entity';
 import { Order } from './orders.entity';
+import { ProductsInOrders } from './productsInOrders.entity';
 import Property from './properties.entity';
 
 @Entity()
@@ -24,8 +25,8 @@ export default class Product{
     category:Category
 
     
-    @ManyToMany(type=>Order,order=>order.products)
-    orders:Order[]
+    @OneToMany(type=>ProductsInOrders,order=>order.product,{onDelete:'SET NULL'})
+    orders:ProductsInOrders[]
 
     @OneToMany(type=>Property,prop => prop.product)
     properties:Property[]

@@ -1,4 +1,4 @@
-import { Injectable,HttpException,HttpStatus } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, SelectQueryBuilder } from 'typeorm';
 import { Order } from 'src/entities/orders.entity';
@@ -8,6 +8,8 @@ import Product from 'src/entities/product.entity';
 import Status from 'src/types/status';
 import { SetStatus } from './dto/set-status.dto';
 import { ChangeOrder } from './dto/change-order.dto';
+import { ProductsInOrders } from 'src/entities/productsInOrders.entity';
+import { OrderData } from './dto/order-data.dto';
 
 @Injectable()
 export class OrdersService {
@@ -16,71 +18,91 @@ export class OrdersService {
         private orderRepository: Repository<Order>,
         @InjectRepository(User)
         private userRepository: Repository<User>,
-        @InjectRepository(Product)
-        private productRepository: Repository<Product>
+        @InjectRepository(ProductsInOrders)
+        private productsInOrdersRepository: Repository<ProductsInOrders>
     ) { }
-    getById(id: number): Promise<Order> {
-        return this.orderRepository.createQueryBuilder('order').leftJoinAndSelect('order.products', 'products').where(`order.id = ${id}`).getOne()
+    async getById(id: number): Promise<OrderData> {
+        var data = await this.orderRepository.query(`select  
+        product."name",
+        product.description,
+        product.discount,
+        product.price,
+        product.id as productId,
+        "order".id,
+        "order".date,
+        "order".status,
+        "order".address,
+        "order".cost,
+        "products_in_orders"."count"
+        from "order"
+        left join products_in_orders ON products_in_orders."orderId" = "order".id 
+        left join product ON product.id = products_in_orders."productId" 
+        where "order".id = ${id}`)
+        if (!data.length) {
+            throw new HttpException('order not found', 400)
+        }
+        var result: OrderData = {
+            address: data[0].address,
+            cost: data[0].cost,
+            id,
+            date: data[0].date,
+            status: data[0].status,
+            products: []
+        }
+        data.forEach(el => {
+            result.products.push({
+                id: el.productid,
+                description: el.description,
+                discount: el.discount,
+                price: el.price,
+                name: el.name,
+                count: el.count
+            })
+        })
+        return result
+        //return this.orderRepository.createQueryBuilder('order').leftJoinAndSelect('order.products', 'productsInOrders').where(`order.id = ${id}`).getOne()
     }
 
     async createNew(data: NewOrder): Promise<Order | Error> {
-        let user = new Promise<User>((res, rej) => {
+        let user = await new Promise<User>((res, rej) => {
             if (typeof data.user == 'number') {
                 this.userRepository.findOneBy({ id: data.user }).then(user => {
                     res(user)
                 }, err => {
                     rej(err)
                 })
-            } else if(typeof data.user == 'string') {
+            } else if (typeof data.user == 'string') {
                 this.userRepository.findOneBy({ login: data.user }).then(user => {
                     res(user)
                 }, err => {
                     rej(err)
                 })
-            } else{
+            } else {
                 res(data.user)
             }
         })
-        let products = new Promise<Array<Product>>((res, rej) => {
-            let allProducts: Array<Promise<Product>>= []
-            data.products.forEach(id => {
-                allProducts.push(new Promise((resolve, reject) => {
-                    if (typeof id == 'number') {
-                        this.productRepository.findOneBy({ id: id }).then(product => {
-                            resolve(product)
-                        }, err => {
-                            reject(err)
-                        })
-                    } else {
-                        resolve(id)
-                    }
-                }))
-            });
-            Promise.all(allProducts).then(foundedProducts => {
-                res(foundedProducts)
-            }, err => {
-                rej(err)
-            })
+        let cost = 0
+        let productsP: Promise<ProductsInOrders>[] = []
+        data.products.forEach(el => {
+            cost += el.price * el.count
+            productsP.push(this.productsInOrdersRepository.save({
+                product: el,
+                count: el.count,
+            }))
         })
         try {
-            let orderData = await Promise.all([user, products])
-            let [userOrder, productsOrder] = orderData
-            let cost = 0
-            productsOrder.forEach(el => {
-                cost += el.price
-            })
+            const products = await Promise.all(productsP)
             return this.orderRepository.save({
                 date: new Date(),
-                products: productsOrder,
-                user: userOrder,
+                products: products,
+                user,
                 status: 'created',
-                address:data.address,
+                address: data.address,
                 cost
             })
-        } catch (e) {
-            return new HttpException(e,HttpStatus.BAD_REQUEST)
+        } catch {
+            return new HttpException('products error', 400)
         }
-
 
     }
 
@@ -92,23 +114,23 @@ export class OrdersService {
         })
     }
 
-    async changeOrder(data: ChangeOrder):Promise<Error|Order> {
+    async changeOrder(data: ChangeOrder): Promise<Error | Order> {
         let order = await this.orderRepository.findOneBy({ id: data.id })
-        if (order.status == 'created') {
-            let orderProductsPromise: Array<Promise<Product> | Product> = []
-            data.products.forEach(el => {
-                if (typeof el == 'number') {
-                    orderProductsPromise.push(this.productRepository.findOneBy({ id: el }))
-                } else {
-                    orderProductsPromise.push(el)
-                }
-            })
-            let orderProducts = await Promise.all(orderProductsPromise)
-            return this.orderRepository.save({
-                ...order,
-                products: orderProducts
-            })
-        }
-        return new HttpException(`this order already in status ${order.status}`,HttpStatus.BAD_REQUEST)
+        // if (order.status == 'created') {
+        //     let orderProductsPromise: Array<Promise<Product> | Product> = []
+        //     data.products.forEach(el => {
+        //         if (typeof el == 'number') {
+        //             orderProductsPromise.push(this.productsInOrdersRepository.findOneBy({ id: el }))
+        //         } else {
+        //             orderProductsPromise.push(el)
+        //         }
+        //     })
+        //     let orderProducts = await Promise.all(orderProductsPromise)
+        //     return this.orderRepository.save({
+        //         ...order,
+        //         products: orderProducts
+        //     })
+        // }
+        return new HttpException(`this order already in status ${order.status}`, HttpStatus.BAD_REQUEST)
     }
 }

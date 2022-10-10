@@ -6,21 +6,30 @@ import { UsersModule } from './users/users.module';
 import { CategoriesModule } from './categories/categories.module';
 import { OrdersModule } from './orders/orders.module';
 import * as dotenv from 'dotenv'
-import { ClientModule } from './client/client.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path'
+import Category from './entities/category.entity';
+import { Order } from './entities/orders.entity';
+import Product from './entities/product.entity';
+import { ProductsInOrders } from './entities/productsInOrders.entity';
+import Property from './entities/properties.entity';
+import { User } from './entities/user.entity';
 dotenv.config()
 
 
 @Module({
-  imports: [ProductsModule, TypeOrmModule.forRoot({
-    type:'postgres',
-    host:'localhost',
-    port:5432,
-    username:process.env.DB_LOGIN,
-    password:process.env.DB_PASSWORD,
-    database:process.env.DB,
-    entities:['dist/entities/**/*.entity.js'],
-    synchronize:true
-  }),UsersModule, CategoriesModule, OrdersModule,ClientModule],
+  imports: [ServeStaticModule.forRoot({
+    rootPath: join(__dirname,'..', 'public'),
+  }), ProductsModule, TypeOrmModule.forRoot({
+    type: 'postgres',
+    host: 'localhost',///172.17.0.2
+    port: 5432,
+    username: process.env.DB_LOGIN,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB,
+    entities: [Category,Order,Product,ProductsInOrders,Property,User],
+    synchronize: true
+  }), UsersModule, CategoriesModule, OrdersModule],
 })
 export class AppModule {
 }

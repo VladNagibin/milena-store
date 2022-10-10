@@ -1,0 +1,19 @@
+.footer{
+    padding: 0 10px 0 10px;
+    margin: 40px 15px 0 15px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-between;
+    background-color: $clr-c;
+    align-items: center;
+    height: 50px;
+    div{
+        text-align: center;
+        cursor: pointer;
+        padding: 5px;
+        min-width: 50px;
+        border-radius: 20px;
+        background-color: $clr;
+        color: $clr-c;
+    }
+}

@@ -1,6 +1,7 @@
 import Status from 'src/types/status'
-import {Entity, Column, PrimaryGeneratedColumn, ManyToMany,ManyToOne, JoinTable} from 'typeorm'
+import {Entity, Column, PrimaryGeneratedColumn, ManyToMany,ManyToOne, JoinTable, OneToMany} from 'typeorm'
 import Product from './product.entity'
+import { ProductsInOrders } from './productsInOrders.entity'
 import { User } from './user.entity'
 
 @Entity()
@@ -23,7 +24,6 @@ export class Order{
     @ManyToOne(type => User, user => user.orders,{onDelete:'SET NULL'})
     user:User
 
-    @ManyToMany(type=>Product,product=>product.orders)
-    @JoinTable()
-    products:Product[]
+    @OneToMany(type=>ProductsInOrders,product=>product.order,{onDelete:'CASCADE'})
+    products:ProductsInOrders[]
 }

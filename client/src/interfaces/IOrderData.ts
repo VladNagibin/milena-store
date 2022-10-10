@@ -7,6 +7,4 @@ export default interface IOrderData{
     intercom:number|undefined
     entrance:number|undefined
     floor:number|undefined
-    email:string
-    phone:number|undefined
 }

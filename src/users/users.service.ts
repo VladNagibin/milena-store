@@ -72,10 +72,10 @@ export class UsersService {
 
     
     getAllOrders(login:string):Promise<User>{
-        return this.usersRepository.createQueryBuilder('users').leftJoinAndSelect('users.orders','order').where(`users.login = :login`,{login}).getOne()//findOneBy({id})
+        return this.usersRepository.createQueryBuilder('users').leftJoinAndSelect('users.orders','order').where(`users.login = :login`,{login}).addOrderBy('date','DESC').getOne()//findOneBy({id})
     }
 
-    async setContactInfo(login:string,email:string|undefined,phone:number|undefined ){
+    async setContactInfo(login:string,email:string|undefined,phone:string|undefined ){
         var user = await this.usersRepository.findOneBy({login})
         if(email){
             user.email = email

@@ -1,5 +1,8 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import IOrder from '../../interfaces/IOrder'
+import DateBadge from './DateBadge'
+import StatusBadge from './StatusBadge'
 
 interface IOrderProps {
     order: IOrder
@@ -15,16 +18,17 @@ export default function Order({ order }: IOrderProps) {
             <div className='address-div'>
                 Адрес:{order.address ? order.address : 'Не указан'}
             </div>
-            <div className='date'>
-                <input type='datetime-local' value={(typeof order.date == 'string' ? order.date : order.date.toISOString()).slice(0, 19)} disabled={true} />
-            </div>
+            <DateBadge date={order.date}/>
             <div className='right'>
                 <div className='cost'>
                     {order.cost}Р
                 </div>
-                <div className={`status ${order.status}`}>
-                    {order.status=='created'?'Создан':order.status=='closed'?'Закрыт':order.status=='paid'?'Оплачен':'Отправлен'}
-                </div>
+                <StatusBadge status={order.status}/>
+            </div>
+            <div>
+                <Link to={`/profile/order/${order.id}`}><span className="material-symbols-outlined icon">
+                    keyboard_tab
+                </span></Link>
             </div>
 
         </div>

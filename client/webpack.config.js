@@ -12,7 +12,7 @@ module.exports = {
     output: {
         filename: '[name].client.js',
         publicPath: '/',
-        path: path.resolve(__dirname, '../dist/public')
+        path: path.resolve(__dirname, '../public')
     },
     resolve: {
         extensions: ['.tsx', '.ts', '.jsx', '.js']

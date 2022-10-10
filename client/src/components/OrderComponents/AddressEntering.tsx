@@ -1,18 +1,18 @@
-import React, { useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useHttp } from '../../hooks/http.hook'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.hook'
 import IOrderData from '../../interfaces/IOrderData'
+import IUserData from '../../interfaces/IUserData'
 import { clear } from '../../reducers/cartReducer'
+import Loader from '../Loader'
+import InputMask from 'react-input-mask';
 
-const localStorageOrderName = 'milena-store-new-order-data' 
 
-const localStorageData = localStorage.getItem(localStorageOrderName)
-const emptyState:IOrderData = {
+
+const initialState: IOrderData = {
     city: '',
-    email: '',
     house: '',
-    phone: undefined,
     privateHouse: false,
     street: '',
     entrance: undefined,
@@ -21,17 +21,28 @@ const emptyState:IOrderData = {
     intercom: undefined,
 
 }
-const initialState: IOrderData = localStorageData?JSON.parse(localStorageData):emptyState
 
 export default function AddressEntering() {
     const [orderData, setOrderData] = useState<IOrderData>(initialState)
-    const [cart,login] = useAppSelector(state=>[state.cart.products,state.auth.login])
+    const [cart, login, token] = useAppSelector(state => [state.cart.products, state.auth.login, state.auth.token])
+    const [userData, setUserData] = useState<{
+        email: string | null
+        phone: number | null,
+        changed: boolean
+    }>({
+        email: null,
+        phone: null,
+        changed: false
+    })
     const dispatch = useAppDispatch()
     const orderHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         setOrderData({ ...orderData, [event.target.name]: event.target.value })
     }
-    
-    const {request, loading} = useHttp()
+    const userDataHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setUserData({ ...userData, [event.target.name]: event.target.value, changed: true })
+    }
+
+    const { request, loading } = useHttp()
     const navigate = useNavigate()
     const privateHouseHandler = () => {
         if (!orderData.privateHouse) {
@@ -55,26 +66,59 @@ export default function AddressEntering() {
         }
     }
 
-    const createNewOrder = (event:React.FormEvent<HTMLFormElement>) =>{
+    const createNewOrder = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
-        localStorage.setItem(localStorageOrderName,JSON.stringify(orderData))
-        request('/orders','POST',{
-            user:login,
-            address: `${orderData.city},${orderData.street},${orderData.house}, ${orderData.privateHouse?'частный дом':`${orderData.flat},${orderData.entrance?`подъезд ${orderData.entrance}`:''},${orderData.floor?`этаж ${orderData.floor}`:''},${orderData.intercom?`домофон ${orderData.intercom}`:''}`}`,
-            products:cart
-        }).then(result=>{
+        if (userData.changed) {
+            request(`/users/${login}`, 'PATCH', {
+                email: userData.email,
+                phone: userData.phone
+            }, { Authorization: token })
+        }
+        request('/orders', 'POST', {
+            user: login,
+            address: `${orderData.city},${orderData.street},${orderData.house}, ${orderData.privateHouse ? 'частный дом' : `${orderData.flat},${orderData.entrance ? `подъезд ${orderData.entrance}` : ''},${orderData.floor ? `этаж ${orderData.floor}` : ''},${orderData.intercom ? `домофон ${orderData.intercom}` : ''}`}`,
+            products: cart
+        }).then(result => {
             alert('Ваш заказ создан, скоро с вами свяжутся для подтверждения заказа')
             dispatch(clear())
-            localStorage.removeItem(localStorageOrderName)
             navigate('/profile')
         })
     }
 
+    const getUserData = useCallback(async (controller: AbortController) => {
+        try {
+            const data = await request<IUserData>(`/users/${login}`, 'GET', null, { Authorization: token }, controller.signal)
+            setUserData({
+                email: data.email,
+                phone: data.phone,
+                changed: false
+            })
+
+        } catch (e) {
+            alert(e)
+        }
+    }, [login])
+
+    useEffect(() => {
+        let controller = new AbortController()
+
+        getUserData(controller)
+        return (() => {
+            controller.abort()
+        })
+
+    }, [])
+    if (loading) {
+        return (
+            <Loader />
+        )
+    }
+
     return (
-        <form className='order-data'  onSubmit={createNewOrder}>
+        <form className='order-data' onSubmit={createNewOrder}>
             <div className='top-panel'>
                 <h2>Оформление заказа</h2>
-                <button onClick={() => setOrderData(emptyState)}><span className="material-symbols-outlined">
+                <button onClick={() => setOrderData(initialState)}><span className="material-symbols-outlined">
                     clear_all
                 </span>Очистить</button>
             </div>
@@ -97,8 +141,8 @@ export default function AddressEntering() {
             </div>
             <h2>Контактная информация</h2>
             <div className='contact-fields'>
-                <input required name='email' placeholder='Email' onChange={orderHandler} value={orderData.email}></input>
-                <input required name='phone' placeholder='Телефон' type={'number'} onChange={orderHandler} value={orderData.phone ? orderData.phone : ''}></input>
+                <input required name='email' placeholder='Email' onChange={userDataHandler} value={userData.email ? userData.email : ''}></input>
+                <InputMask required mask="+7(999) 999-99-99" name='phone' placeholder='Телефон' onChange={userDataHandler} value={userData.phone ? userData.phone : ''} />
             </div>
             <div className='bottom-panel'>
                 <button type='submit'><span className="material-symbols-outlined">

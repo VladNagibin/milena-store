@@ -1,32 +1,21 @@
 import React from 'react'
-import { useAppSelector } from '../../hooks/redux.hook'
+import ICartProduct from '../../interfaces/ICartProduct'
 import CartProduct from './CartProduct'
-import Summary from './Summary'
 
-
-export default function CartProducts() {
-    const cart = useAppSelector(state => state.cart.products)
-    if (!cart.length) {
-        return <div className='empty-cart'>
-            В корзине пока пусто
-            <span className="material-symbols-outlined icon">
-                sentiment_dissatisfied
-            </span>
-        </div>
+interface ICartProductsProps {
+    products: ICartProduct[],
+    settings?:{
+        hideCartButtons:boolean
     }
-    var summ = 0
-    cart.forEach(elem=>{
-        summ +=elem.price*elem.count
-    })
+}
+
+
+export default function CartProducts({ products,settings }: ICartProductsProps) {
     return (
-        <div>
-            <h2>В корзине {cart.length} товар(ов)</h2>
-            <div className='cart-products'>{
-                cart.map(product => {
-                    return <CartProduct key={product.id} product={product} />
-                })
-            }</div>
-            <Summary summ={summ}/>
-        </div>
+        <div className='cart-products'>{
+            products.map(product => {
+                return <CartProduct key={product.id} product={product} settings={settings} />
+            })
+        }</div>
     )
 }
