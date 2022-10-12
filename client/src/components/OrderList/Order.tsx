@@ -15,15 +15,17 @@ export default function Order({ order }: IOrderProps) {
             <div className='id'>
                 {order.id}
             </div>
-            <div className='address-div'>
-                Адрес:{order.address ? order.address : 'Не указан'}
+            <div className='left'>
+                <div className='address-div'>
+                    Адрес:{order.address ? order.address : 'Не указан'}
+                </div>
+                <DateBadge date={order.date} />
             </div>
-            <DateBadge date={order.date}/>
             <div className='right'>
                 <div className='cost'>
                     {order.cost}Р
                 </div>
-                <StatusBadge status={order.status}/>
+                <StatusBadge status={order.status} />
             </div>
             <div>
                 <Link to={`/profile/order/${order.id}`}><span className="material-symbols-outlined icon">

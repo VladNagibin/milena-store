@@ -39,6 +39,9 @@
         width: 100%;
         display: flex;
         justify-content: space-around;
+        @media (max-width:700px) {
+            flex-direction: column;
+        }
 
         a {
             width: 100%;
@@ -50,7 +53,9 @@
         width: 100%;
         display: flex;
         flex-wrap: wrap;
-
+        @media (max-width:700px) {
+            display: none;
+        }
         a {
             text-align: center;
             width: 33%;

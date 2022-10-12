@@ -21,7 +21,7 @@ export const useHttp = () => {
 
             } catch (e) {
                 setLoading(false)
-                throw e
+                rej(e)
             }
         })
     }

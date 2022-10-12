@@ -1,44 +1,22 @@
 import React, { useState } from 'react'
-import { useHttp } from '../hooks/http.hook'
-import { useAppDispatch } from '../hooks/redux.hook'
-import { enter } from '../reducers/authReducer'
-import { ILoginData } from '../reducers/authReducer'
+import Enter from '../components/Entering/Enter'
+import Registration from '../components/Entering/Registration'
+
+type mode = 'enter' | 'registration'
 export default function AuthPage() {
-  const [form, setForm] = useState({
-    login: '',
-    password: ''
-  })
-  const { loading, request } = useHttp()
-  const formHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setForm({ ...form, [event.target.name]: event.target.value })
-  }
-  const dispatch = useAppDispatch()
+  const [mode, setMode] = useState<mode>('enter')
 
-  const login = () => {
-    try{
-      request<{
-        success:boolean
-        data:ILoginData
-        error?:string
-      }>('/users', 'POST', form).then(json=>{
-        if(json.success){ 
-          dispatch(enter(json.data))
-        }else{
-          alert(json.error)
-        }
-      })
-    }catch(e){
-      alert(e)
-    }
-    
-  }
+
   return (
-    <div>
-      Auth page
-      <input name='login' type={'text'} placeholder='login' value={form.login} onChange={formHandler} />
-      <input name='password' type='password' placeholder='password' value={form.password} onChange={formHandler} />
-      <button onClick={login}>Войти</button>
-
+    <div className='auth-page'>
+      <div className='buttons'>
+        <button className={mode=='enter'?'active':''} onClick={()=>setMode('enter')}>Вход</button>
+        <button className={mode=='registration'?'active':''} onClick={()=>setMode('registration')}>Регистрация</button>
+      </div>
+      {
+        mode=='enter'?<Enter />:<Registration setEnter={()=>setMode('enter')}/>
+      }
+      
     </div>
   )
 }

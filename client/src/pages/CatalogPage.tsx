@@ -12,23 +12,20 @@ import Products from '../components/Products/Products'
 export default function CatalogPage() {
     const { request, loading } = useHttp()
     const [products, setProducts] = useState<IProduct[]>([])
-    const [name,setName] = useState<string>('Каталог')
+    const [name, setName] = useState<string>('Каталог')
     const id = useParams().id
     const getCategories = useCallback(async (controller: AbortController) => {
-        try {
-            const data = await request<ICategoryQuery>(`/categories${id ? `/${id}` : ''}`, 'GET', null, {}, controller.signal)
+        request<ICategoryQuery>(`/categories${id ? `/${id}` : ''}`, 'GET', null, {}, controller.signal).then(data => {
             setProducts(data.products)
             setName(data.name)
-        } catch (e) {
-            alert(e)
-        }
-    },[id])
+        })
+    }, [id])
 
     useEffect(() => {
-        let controller = new AbortController()            
+        let controller = new AbortController()
         if (id) {
             getCategories(controller)
-        }else{
+        } else {
             setProducts([])
             setName('Каталог')
         }
@@ -46,7 +43,7 @@ export default function CatalogPage() {
         <div className='catalog-page'>
             <h1>{name}</h1>
             <Categories id={id} />
-            <Products products={products}/>
+            <Products products={products} />
         </div>
     )
 }

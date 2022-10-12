@@ -14,18 +14,15 @@ export default function Categories({ id }: CategoriesProps) {
   const [categories, setCategories] = useState<ICategory[]>([])
   const [childCategories, setChildCategories] = useState<IChildCategory[]>([])
   const [show, setShow] = useState(false)
-  const {request,loading} = useHttp()
+  const { request, loading } = useHttp()
   const handleShow = () => {
     setShow(prev => !prev)
   }
   const getCategories = async (controller: AbortController) => {
-    try {
-      const data = await request<ICategory[]>(`/categories/tree${id ? `/${id}` : ''}`, 'GET', null, {}, controller.signal)
+    request<ICategory[]>(`/categories/tree${id ? `/${id}` : ''}`, 'GET', null, {}, controller.signal).then(data => {
       setCategories(data)
       setShow(!!data.length)
-    } catch (e) {
-      alert(e)
-    }
+    })
   }
 
   useEffect(() => {

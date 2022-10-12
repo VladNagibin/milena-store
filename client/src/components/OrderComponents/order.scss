@@ -70,6 +70,14 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
+    .data{
+        width: 70%;
+        display: flex;
+        justify-content: space-around;
+        @media (max-width:1000px) {
+            flex-direction: column;
+        }
+    }
     .unable{
         background-color: $clr-hover;
     }

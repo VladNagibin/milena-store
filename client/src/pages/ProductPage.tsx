@@ -10,8 +10,9 @@ export default function ProductPage() {
     const [product, setProduct] = useState<IProductDetailed | null>(null)
     const { request, loading } = useHttp()
     const getProduct = useCallback(async (signal: AbortSignal) => {
-        const data = await request<IProductDetailed>(`/products/${id}`, 'GET', null, {}, signal)
-        setProduct(data)
+        request<IProductDetailed>(`/products/${id}`, 'GET', null, {}, signal).then(data=>{
+            setProduct(data)
+        })
     }, [id])
     useEffect(() => {
         const controller = new AbortController()

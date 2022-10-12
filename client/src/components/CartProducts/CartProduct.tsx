@@ -30,15 +30,19 @@ export default function CartProduct({ product, settings }: ICartProductProps) {
     }
     return (
         <div className='cart-product'>
-            <Link to={`/catalog/product/${product.id}`}><img className='pic' src={`/${product.id}.png`} /></Link>
-            <div className='name'>
-                {product.name}
+            <div className='right'>
+                <Link to={`/catalog/product/${product.id}`}><img className='pic' src={`/${product.id}.png`} /></Link>
+                <div className='name'>
+                    {product.name}
+                </div>
             </div>
-            <div className='price'>
-                {product.price * product.count}р
-            </div>
-            <div className='discount'>
-                -{product.discount}%
+            <div className='center'>
+                <div className='price'>
+                    {product.price * product.count}р
+                </div>
+                <div className='discount'>
+                    -{product.discount}%
+                </div>
             </div>
             {settings?.hideCartButtons ? <div className='cart-buttons'><div className='counter'>
                 {product.count}

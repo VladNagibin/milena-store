@@ -53,8 +53,11 @@ export default function ContactInfo() {
   }
   return (
     <div className='contact-fields'>
-      <input disabled={!changing} name='email' placeholder='Email' className={changing ? '' : 'unable'} value={contactInfo.email ? contactInfo.email : ''} onChange={contactInfoHandler}></input>
-      <InputMask mask="+7(999) 999-99-99" disabled={!changing} name='phone' placeholder='Телефон' className={changing ? '' : 'unable'} value={contactInfo.phone ? contactInfo.phone : ''} onChange={contactInfoHandler} />
+      <div className='data'>
+        <input disabled={!changing} name='email' placeholder='Email' className={changing ? '' : 'unable'} value={contactInfo.email ? contactInfo.email : ''} onChange={contactInfoHandler}></input>
+        <InputMask mask="+7(999) 999-99-99" disabled={!changing} name='phone' placeholder='Телефон' className={changing ? '' : 'unable'} value={contactInfo.phone ? contactInfo.phone : ''} onChange={contactInfoHandler} />
+
+      </div>
       <div className='buttons'>
         <span className="material-symbols-outlined icon" onClick={() => setChanging(!changing)}>
           edit

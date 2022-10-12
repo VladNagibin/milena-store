@@ -12,6 +12,7 @@ $dark-c:#22004D;
 @import './components/OrderComponents/order.scss';
 @import './components/OrderList/orderList.scss';
 @import './components/footer.scss';
+@import './components/Entering/enter.scss';
 * {
     margin: 0;
     padding: 0;
@@ -30,7 +31,7 @@ body {
 .container{
     width: 70%;
     margin: auto;
-    min-height: calc(100vh - 180px);
+    min-height: calc(100vh - 220px);
 }
 
 .header {
@@ -211,6 +212,29 @@ a {
             border: 2px solid $dark-c;
             border-radius: 20px;
             background-color: $clr;
+        }
+    }
+}
+.auth-page{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .buttons{
+        display: flex;
+        justify-content: center;
+        button{
+            font-size: 15px;
+            width: 120px;
+            height: 40px;
+            margin: 10px;
+            border-radius: 20px;
+            background-color: $clr-c;
+            border: $clr-c 1px solid;
+            color: $clr;
+            transition: 0.5s;
+        }
+        .active{
+            background-color: $dark-c;
         }
     }
 }

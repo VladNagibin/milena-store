@@ -3,6 +3,9 @@ $text-color:black;
 .navigation {
     position: relative;
     padding: 0 50px 0 50px;
+    @media (max-width:580px) {
+        padding: 0;
+    }
     width: 400px;
     height: 70px;
     background-color: #8488C5;

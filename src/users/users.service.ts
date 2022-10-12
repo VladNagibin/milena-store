@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import * as bcrypt from 'bcrypt'
@@ -17,6 +17,10 @@ export class UsersService {
 
 
     async create(data: NewUser) {
+        var [, user] = await this.usersRepository.findAndCountBy({ login: data.login })
+        if (user > 0) {
+            throw new HttpException('такой пользователь уже существует', 401)
+        }
         var hash = await bcrypt.hash(data.password, 10)
         var newUser = this.usersRepository.create({
             login: data.login,
@@ -29,11 +33,16 @@ export class UsersService {
 
     async enterInAccount(data: Enter): Promise<answer> {
         return new Promise((responce, reject) => {
-            this.usersRepository.findOneBy({ login: data.login }).then(user => {
+            this.usersRepository.findOne({
+                where: [
+                    { login: data.login },
+                    { email: data.login }
+                ]
+            }).then(user => {
                 if (!user) {
                     reject({
                         success: false,
-                        error: 'user not found'
+                        error: 'Пользователь не найден'
                     })
                 } else {
                     bcrypt.compare(data.password, user.password).then(isValid => {
@@ -49,7 +58,7 @@ export class UsersService {
                         } else {
                             reject({
                                 success: false,
-                                error: 'password isn\'t valid'
+                                error: 'Пароль неверный'
                             })
                         }
                     }, error => {
@@ -70,25 +79,25 @@ export class UsersService {
         })
     }
 
-    
-    getAllOrders(login:string):Promise<User>{
-        return this.usersRepository.createQueryBuilder('users').leftJoinAndSelect('users.orders','order').where(`users.login = :login`,{login}).addOrderBy('date','DESC').getOne()//findOneBy({id})
+
+    getAllOrders(login: string): Promise<User> {
+        return this.usersRepository.createQueryBuilder('users').leftJoinAndSelect('users.orders', 'order').where(`users.login = :login`, { login }).addOrderBy('date', 'DESC').getOne()//findOneBy({id})
     }
 
-    async setContactInfo(login:string,email:string|undefined,phone:string|undefined ){
-        var user = await this.usersRepository.findOneBy({login})
-        if(email){
+    async setContactInfo(login: string, email: string | undefined, phone: string | undefined) {
+        var user = await this.usersRepository.findOneBy({ login })
+        if (email) {
             user.email = email
         }
-        if(phone){
+        if (phone) {
             user.phone = phone
-        } 
+        }
         return this.usersRepository.save(user)
 
     }
 
     findOne(login: string): Promise<User> {
-        return this.usersRepository.findOneBy({ login:login })
+        return this.usersRepository.findOneBy({ login: login })
     }
     async remove(id: number): Promise<void> {
         await this.usersRepository.delete(id)
