@@ -263,3 +263,48 @@ header button:hover{
   flex-wrap: wrap;
   justify-content: space-between;
 }
+
+.new-category{
+  margin-top: 5px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  border-radius: 20px;
+  background-color: #8488C5;
+  color:rgb(242, 230, 247);
+}
+
+.new-category input{
+  height: 30px;
+  margin-bottom: 10px;
+  border-radius: 20px;
+  text-align: center;
+  border: 0px;
+  background-color: rgb(242, 230, 247);
+}
+
+.new-category button{
+  height: 30px;
+  transition: 0.5s;
+  margin-bottom: 10px;
+  border-radius: 20px;
+  text-align: center;
+  border: 0px;
+  background-color: rgb(242, 230, 247);
+}
+.new-category button:hover{
+  background-color: rgb(87, 53, 102);
+  color: rgb(242, 230, 247);
+}
+
+
+
+
+
+
+
+
+.hide-panel{
+  display: none;
+}

@@ -1,45 +1,56 @@
 import { response } from 'express'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import ICategory from '../../interfaces/ICategory'
 interface ICategoryProps {
     category: ICategory
+    reRender:()=>void
 }
 
-export default function Category({ category }: ICategoryProps) {
-    const [categoryData, setCategoryData] = useState<ICategory>(category)
+export default function Category({ category,reRender}: ICategoryProps) {
+    const [categoryData, setCategoryData] = useState<ICategory>({
+        children:[],
+        id:'',
+        name:"",
+        parentId:null,
+        level:0
+    })
     const [editing, setEditing] = useState(false)
     const { token } = useContext(AuthContext)
     const handleCategoryData = (event: React.ChangeEvent<HTMLInputElement>) => {
         setCategoryData((prev) => { return { ...prev, [event.target.name]: event.target.value } })
     }
     const deleteCategory = () => {
-        fetch(`/categories/${categoryData.id}`, {
-            method: "DELETE",
-            headers: {
-                'Content-type': 'application/json',
-                'authorization': token
-            }
-        }).then(response => {
-            alert("Категория удалена")
-        })
-    }
-    const save = () => {
-        if (changesCheck()) {
-            fetch('/categories', {
-                method: "PATCH",
+        if (window.confirm(`Удалить категорию ${category.name}`)) {
+            fetch(`/categories/${categoryData.id}`, {
+                method: "DELETE",
                 headers: {
                     'Content-type': 'application/json',
                     'authorization': token
-                },
-                body: JSON.stringify({
-                    id: categoryData.id,
-                    parent: categoryData.parentId,
-                    name: categoryData.name
-                })
+                }
             }).then(response => {
-                alert("Категория изменена")
+                reRender()
             })
+        }
+    }
+    const save = () => {
+        if (window.confirm(`Изменить категорию ${category.name}`)) {
+            if (changesCheck()) {
+                fetch('/categories', {
+                    method: "PATCH",
+                    headers: {
+                        'Content-type': 'application/json',
+                        'authorization': token
+                    },
+                    body: JSON.stringify({
+                        id: categoryData.id,
+                        parent: categoryData.parentId,
+                        name: categoryData.name
+                    })
+                }).then(response => {
+                    reRender()
+                })
+            }
         }
     }
     const changesCheck = () => {
@@ -51,6 +62,9 @@ export default function Category({ category }: ICategoryProps) {
         }
         return false
     }
+    useEffect(()=>{
+        setCategoryData(category)
+    },[category])
     return (
         <div className='category'>
             <div className={`name color-${categoryData.level}`}>
@@ -72,7 +86,7 @@ export default function Category({ category }: ICategoryProps) {
             <div className='child-categories'>
                 {
                     categoryData.children.map(el => {
-                        return <Category category={el} key={el.id} />
+                        return <Category category={el} key={el.id} reRender={reRender}/>
                     })
                 }
             </div>
