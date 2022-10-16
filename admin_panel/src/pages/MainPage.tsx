@@ -1,12 +1,34 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import Categories from '../components/Categories/Categories'
+import { AuthContext } from '../context/AuthContext'
+import ICategory from '../interfaces/ICategory'
 
 const MainPage = () => {
+  const { token } = useContext(AuthContext)
+  const [categories, setCategories] = useState<ICategory[]>([])
+  const getCategories = async () => {
+    const responce = await fetch(`/categories/admin/tree`, {
+      method: 'GET',
+      body: null,
+      headers: {
+        'authorization': token
+      }
+    })
+    const data: ICategory[] = await responce.json()
+    setCategories(data)
+  }
+  useEffect(() => {
+    getCategories()
+  }, [])
+
   return (
     <>
-        
-            <h1>Панель администратора</h1>
-            {/* <div className='main_buttons'>
+      
+      <h1>Панель администратора</h1>
+      <span className={`material-symbols-outlined icon add-btn`} >add</span>
+      <Categories categories={categories} />
+      {/* <div className='main_buttons'>
                 <div className='top_buttons'>
                 <Link className='main_button' to={'/create_item'}>
                   Создать товар
@@ -20,8 +42,8 @@ const MainPage = () => {
                     <button className='main_button'>...</button>
                 </div>
             </div> */}
-        
-    </> 
+
+    </>
   )
 }
 

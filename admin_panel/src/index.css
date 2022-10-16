@@ -3,12 +3,14 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  background-color: #f5f5f5;
+  background-color: rgb(242, 230, 247);
+  font-family: 'Roboto';
 }
 
 .container{
-  max-width: 1300px;
-  margin: 0 auto;
+  width: 70%;
+  margin: auto;
+  min-height: calc(100vh - 220px);
 }
 
 /* loader */
@@ -169,4 +171,95 @@ header button:hover{
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.category{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.icon{
+  cursor: pointer;
+  background-color: inherit;
+  margin: 0 3px;
+  transition: 0.3s;
+}
+.add-btn{
+  padding: 5px;
+  border-radius: 50%;
+  background-color: #8488C5;
+  color: rgb(242, 230, 247);
+}
+.category .name{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 20px;
+  margin: 10px;
+}
+.category .name .parentId{
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  background-color: inherit;
+}
+
+.category .name .parentId label{
+  background-color: inherit;
+  margin-right: 5px;
+}
+.category .name .parentId input{
+  width: 50px;
+  text-align: center;
+}
+.category .name .hide{
+  font-size: 0px;
+}
+.category .name .data{
+  background-color: inherit;
+  display: flex;
+  align-items: center;
+}
+.category .name input{
+  background-color: rgb(242, 230, 247);
+  transition: 0.3s;
+  width: 100px;
+  border: 0px;
+  border-radius: 10px;
+  height: 30px;
+  text-align: center;
+}
+.category .name .id{
+  margin: 0 2px;
+  background-color: inherit;
+}
+.category .name input:disabled{
+  background-color: inherit;
+  color: inherit;
+  
+}
+.category .color-1{
+  background-color: #96CEC8;
+}
+.category .color-2{
+  background-color: #8488C5;
+  color:rgb(242, 230, 247);
+}
+.category .color-3{
+  background-color: rgb(203, 192, 207);
+}
+.category .color-4{
+  background-color: #d5f7ec;
+}
+.category .color-5{
+  background-color: #edf9f5;
+}
+
+
+.child-categories{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }

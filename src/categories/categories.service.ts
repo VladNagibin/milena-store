@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import Category from 'src/entities/category.entity';
+import AdminCategoryTree from 'src/users/dto/admin-category-tree.dto';
 import { DeleteResult, Repository } from 'typeorm';
 import { ChangeCategory } from './dto/change-category.dto';
 import { NewCategory } from './dto/new-category.dto';
@@ -29,8 +30,49 @@ export class CategoriesService {
         return this.categoryRepository.findBy({ parent: parentCategory })
     }
 
+    async AdminTreeOfCategories(): Promise<AdminCategoryTree[]> {
+        var data = await this.categoryRepository.query(`
+        with RECURSIVE r as (
+            select id, "parentId", name,CAST(name as VARCHAR(100)) as PATH, 1 as level from category
+            where "parentId" is NULL
+            
+            union 
+            select category.id, category."parentId", category.name, CAST(r.PATH || '->' || category.name AS VARCHAR(100)), r.level+1 from category 
+            join r on category."parentId" = r.id
+        )
+        
+        select * from r`)
+        if (data.length == 0) {
+            return []
+        }
+        return this.getAllChildren(data,null)
+        
 
 
+    }
+    getAllChildren = (array: Array<{
+        id: string
+        parentId: string
+        name: string,
+        path: string,
+        level: number
+    }>, parentId):AdminCategoryTree[] => {
+        var responce: AdminCategoryTree[] = []
+        array.filter(el => el.parentId == parentId).forEach(el => {
+            responce.push({
+                id: el.id,
+                name: el.name,
+                parentId:el.parentId,
+                path: el.path,
+                level:el.level,
+                children: []
+            })
+        })
+        responce.forEach(el=>{
+            el.children = this.getAllChildren(array,el.id)
+        })
+        return responce
+    }
     async getTreeOfCategories(id: number | null): Promise<TreeCategories[]> {
         var data = await this.categoryRepository.createQueryBuilder('category')
             .leftJoinAndSelect((subQuery) => {
@@ -75,8 +117,8 @@ export class CategoriesService {
 
     }
 
-    async getOne(id: number): Promise<OneCategory > {
-        
+    async getOne(id: number): Promise<OneCategory> {
+
         let data = await this.categoryRepository.query(`with RECURSIVE r as (
             select id, "parentId", name,1 as Level from category
             where id = ${id}
@@ -88,24 +130,24 @@ export class CategoriesService {
         
         select r.name, r.id, r.level, product.id as product_id, product.name as product_name,product.price as product_price,product.discount as product_discount,product.description as product_description from r left join product on product."categoryId" = r.id order by r.level`)
         if (!data.length) {
-            
+
         }
         let first = data[0]
         let products = []
         data.forEach(element => {
             if (element.product_id) {
                 products.push({
-                    id:element.product_id,
-                    name:element.product_name,
-                    price:element.product_price,
-                    discount:element.product_discount,
-                    description:element.product_description,
+                    id: element.product_id,
+                    name: element.product_name,
+                    price: element.product_price,
+                    discount: element.product_discount,
+                    description: element.product_description,
                 })
             }
         })
         let responce: OneCategory = {
-            id:first.id,
-            name:first.name,
+            id: first.id,
+            name: first.name,
             products
         }
         return responce
@@ -130,10 +172,18 @@ export class CategoriesService {
         }
         if (data.parent) {
             category.parent = typeof data.parent == "number" ? await this.categoryRepository.findOneBy({ id: data.parent }) : data.parent
+            if(data.parent == 0){
+                category.parent == null
+            }
         }
         return this.categoryRepository.save(category)
     }
     deleteOne(id: number): Promise<DeleteResult> {
-        return this.categoryRepository.delete({ id })
+        return this.categoryRepository
+        .createQueryBuilder()
+        .delete()
+        .from(Category)
+        .where("id = :id",{id})
+        .execute()
     }
 }

@@ -22,7 +22,7 @@ function App() {
     }}>
       <Router>
         <Navbar/>
-        <div>
+        <div className="container">
           {routes}
         </div>
       </Router>

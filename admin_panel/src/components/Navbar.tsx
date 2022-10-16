@@ -7,7 +7,6 @@ const Navbar = () => {
   const { out } = useContext(AuthContext);
   return (
     <header className="header">
-      <img style={{width:"100px"}} className="logo" src="./Spinner.svg" alt="" />
       <nav>
         <ul className="nav_links">
           <li>

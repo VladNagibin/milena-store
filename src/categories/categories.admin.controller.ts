@@ -1,4 +1,4 @@
-import { Controller,Param,Post,Delete,Body,Patch } from '@nestjs/common';
+import { Controller,Param,Post,Delete,Body,Patch, Get } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
 import { ChangeCategory } from './dto/change-category.dto';
 import { NewCategory } from './dto/new-category.dto';
@@ -18,8 +18,13 @@ export class CategoriesAdminController {
     }
 
     @Delete(':id')
-    deleteOne(@Param() id:number){
+    deleteOne(@Param('id') id:number){
         return this.categoriesService.deleteOne(id)
+    }
+
+    @Get('/admin/tree')
+    getAdminTree(){
+        return this.categoriesService.AdminTreeOfCategories()
     }
 
 }

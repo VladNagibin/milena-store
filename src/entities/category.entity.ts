@@ -8,7 +8,7 @@ export default class Category{
     @Column()
     name:string
 ///self-referencing
-    @ManyToOne(type=>Category,cat=>cat.childCategories)
+    @ManyToOne(type=>Category,cat=>cat.childCategories,{onDelete:'SET NULL',onUpdate:"NO ACTION"})
     parent:Category
 
     @OneToMany(type=>Category,cat=>cat.parent)
