@@ -79,7 +79,7 @@ export default function Header() {
           </ul>
         </div>
         <div className='right'>
-          <div className='logo'></div>
+          <img className='logo' src='/logo.png'></img>
           {
             login?<div className='out-button' onClick={() => { dispatch(out()) }}>
             <span className="material-symbols-outlined" >

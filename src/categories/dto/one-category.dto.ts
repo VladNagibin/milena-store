@@ -5,6 +5,11 @@ interface IProduct{
     price:number
     discount:number
     description:string
+    properties?:Array<{
+        id:number
+        key:string
+        value:string
+    }>
 }
 
 export class OneCategory{

@@ -24,27 +24,12 @@ const MainPage = () => {
   }, [])
 
   return (
-    <>
+    <div>
       
-      <h1>Панель администратора</h1>
+      <h1>Категории</h1>
       <AddCategory reRender={getCategories}/>
       <Categories reRender={getCategories} categories={categories} />
-      {/* <div className='main_buttons'>
-                <div className='top_buttons'>
-                <Link className='main_button' to={'/create_item'}>
-                  Создать товар
-                </Link>
-                    <button className='main_button'>Создать категорию</button>
-                    <button className='main_button'>Поиск</button>
-                </div>
-                <div className='bot_buttons'>
-                    <button className='main_button'>...</button>
-                    <button className='main_button'>...</button>
-                    <button className='main_button'>...</button>
-                </div>
-            </div> */}
-
-    </>
+    </div>
   )
 }
 

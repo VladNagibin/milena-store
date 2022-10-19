@@ -12,7 +12,7 @@ export default function Product({ product }: IProductProps) {
   return (
     <div className='product'>
       <Link to={`/catalog/product/${product.id}`}>
-        <img src={`/${product.id}.png`} />
+        <img src={`/pictures/${product.id}.png`} />
       </Link>
       <span className='name'>{product.name}</span>
       <div className='bottom-panel'>

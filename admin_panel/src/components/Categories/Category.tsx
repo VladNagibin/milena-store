@@ -1,19 +1,20 @@
+import { Link } from 'react-router-dom'
 import { response } from 'express'
 import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import ICategory from '../../interfaces/ICategory'
 interface ICategoryProps {
     category: ICategory
-    reRender:()=>void
+    reRender: () => void
 }
 
-export default function Category({ category,reRender}: ICategoryProps) {
+export default function Category({ category, reRender }: ICategoryProps) {
     const [categoryData, setCategoryData] = useState<ICategory>({
-        children:[],
-        id:'',
-        name:"",
-        parentId:null,
-        level:0
+        children: [],
+        id: '',
+        name: "",
+        parentId: null,
+        level: 0
     })
     const [editing, setEditing] = useState(false)
     const { token } = useContext(AuthContext)
@@ -62,14 +63,16 @@ export default function Category({ category,reRender}: ICategoryProps) {
         }
         return false
     }
-    useEffect(()=>{
+    useEffect(() => {
         setCategoryData(category)
-    },[category])
+    }, [category])
     return (
-        <div className='category'>
+        <div className={`category`}>
             <div className={`name color-${categoryData.level}`}>
                 <div className='data'>
-                    <span className='id'>{categoryData.id})</span>
+                    <Link to={`/catalog/${categoryData.id}`}>
+                        <span className='id'>{categoryData.id})</span>
+                    </Link>
                     <input type={'text'} name='name' onChange={handleCategoryData} disabled={!editing} value={categoryData.name}></input>
                     <span className="material-symbols-outlined icon" onClick={() => setEditing((prev) => !prev)}>edit</span>
                     <span className={`material-symbols-outlined icon ${editing ? '' : 'hide'}`} onClick={save} >save</span>
@@ -83,10 +86,10 @@ export default function Category({ category,reRender}: ICategoryProps) {
                 }
 
             </div>
-            <div className='child-categories'>
+            <div className={`child-categories `} >
                 {
                     categoryData.children.map(el => {
-                        return <Category category={el} key={el.id} reRender={reRender}/>
+                        return <Category category={el} key={el.id} reRender={reRender} />
                     })
                 }
             </div>

@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useHttp } from '../../hooks/http.hook'
+import { toast } from 'react-toastify'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.hook'
 import IOrderData from '../../interfaces/IOrderData'
 import IUserData from '../../interfaces/IUserData'
@@ -79,7 +80,7 @@ export default function AddressEntering() {
             address: `${orderData.city},${orderData.street},${orderData.house}, ${orderData.privateHouse ? 'частный дом' : `${orderData.flat},${orderData.entrance ? `подъезд ${orderData.entrance}` : ''},${orderData.floor ? `этаж ${orderData.floor}` : ''},${orderData.intercom ? `домофон ${orderData.intercom}` : ''}`}`,
             products: cart
         }).then(result => {
-            alert('Ваш заказ создан, скоро с вами свяжутся для подтверждения заказа')
+            toast.success('Ваш заказ создан, скоро с вами свяжутся для подтверждения заказа')
             dispatch(clear())
             navigate('/profile')
         })

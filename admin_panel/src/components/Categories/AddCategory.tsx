@@ -31,6 +31,7 @@ export default function AddCategory({reRender}:AddCategoryProps) {
                 })
             }).then(response => {
                 reRender()
+                setShow(false)
             })
         }
     }

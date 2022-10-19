@@ -32,7 +32,7 @@ export default function ProductPage() {
                 {product.name}
             </div>
             <div className='top-panel'>
-                <img src={`/${id}.png`} />
+                <img src={`/pictures/${id}.png`} />
                 <div className='specs'>
                     <div className='specs-values'>
                         <h3>Технические характеристики</h3>

@@ -31,7 +31,7 @@ export default function CartProduct({ product, settings }: ICartProductProps) {
     return (
         <div className='cart-product'>
             <div className='right'>
-                <Link to={`/catalog/product/${product.id}`}><img className='pic' src={`/${product.id}.png`} /></Link>
+                <Link to={`/catalog/product/${product.id}`}><img className='pic' src={`/pictures/${product.id}.png`} /></Link>
                 <div className='name'>
                     {product.name}
                 </div>

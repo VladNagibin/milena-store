@@ -57,3 +57,30 @@
     justify-content: flex-start;
     flex-wrap: wrap;
 }
+
+.pagination{
+    // width: 100%;
+    width: fit-content;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    li::marker{
+        content: '';
+    }
+    .page{
+        margin: 0 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: $clr-c;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        color: $clr;
+        cursor: pointer;
+    }
+    .active{
+        background-color: $dark-c;
+    }
+}

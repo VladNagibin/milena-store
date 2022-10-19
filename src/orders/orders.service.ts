@@ -21,6 +21,64 @@ export class OrdersService {
         @InjectRepository(ProductsInOrders)
         private productsInOrdersRepository: Repository<ProductsInOrders>
     ) { }
+
+    async getAll(): Promise<OrderData[]> {
+        var data = await this.orderRepository.query(`select  
+        product."name",
+        product.description,
+        product.discount,
+        product.price,
+        product.id as productId,
+        "order".id,
+        "order".date,
+        "order".status,
+        "order".address,
+        "order".cost,
+		users.login,
+		users.email,
+        users.id as userId,
+		users.phone,
+        "products_in_orders"."count"
+        from "order"
+        left join products_in_orders ON products_in_orders."orderId" = "order".id 
+        left join product ON product.id = products_in_orders."productId" 
+		left join users ON users.id = "order"."userId"
+        ORDER BY "order".date DESC`)
+        if (!data.length) {
+            throw new HttpException('order not found', 400)
+        }
+        var result: OrderData[] = []
+        data.forEach(el => {
+            var index = result.findIndex(order => order.id == el.id)
+            if (index == -1) {
+                result.push(
+                    {
+                        address: el.address,
+                        cost: el.cost,
+                        id: el.id,
+                        date: el.date,
+                        status: el.status,
+                        user:{
+                            email:el.email,
+                            id:el.userid,
+                            login:el.login,
+                            phone:el.phone
+                        },
+                        products: []
+                    }
+                )
+            }
+            result[index==-1?result.length-1:index].products.push({
+                id: el.productid,
+                description: el.description,
+                discount: el.discount,
+                price: el.price,
+                name: el.name,
+                count: el.count
+            })
+        })
+        return result
+    }
     async getById(id: number): Promise<OrderData> {
         var data = await this.orderRepository.query(`select  
         product."name",

@@ -45,8 +45,8 @@ export class CategoriesService {
         if (data.length == 0) {
             return []
         }
-        return this.getAllChildren(data,null)
-        
+        return this.getAllChildren(data, null)
+
 
 
     }
@@ -56,20 +56,20 @@ export class CategoriesService {
         name: string,
         path: string,
         level: number
-    }>, parentId):AdminCategoryTree[] => {
+    }>, parentId): AdminCategoryTree[] => {
         var responce: AdminCategoryTree[] = []
         array.filter(el => el.parentId == parentId).forEach(el => {
             responce.push({
                 id: el.id,
                 name: el.name,
-                parentId:el.parentId,
+                parentId: el.parentId,
                 path: el.path,
-                level:el.level,
+                level: el.level,
                 children: []
             })
         })
-        responce.forEach(el=>{
-            el.children = this.getAllChildren(array,el.id)
+        responce.forEach(el => {
+            el.children = this.getAllChildren(array, el.id)
         })
         return responce
     }
@@ -128,7 +128,20 @@ export class CategoriesService {
             join r on category."parentId" = r.id
         )
         
-        select r.name, r.id, r.level, product.id as product_id, product.name as product_name,product.price as product_price,product.discount as product_discount,product.description as product_description from r left join product on product."categoryId" = r.id order by r.level`)
+        select r.name, 
+		r.id, 
+		r.level, 
+		product.id as product_id, 
+		product.name as product_name,
+		product.price as product_price,
+		product.discount as product_discount,
+		product.description as product_description,
+		property.key as property_key,
+        property.id as property_id,
+		property.value as property_value
+		from r left join product on product."categoryId" = r.id 
+		left join property ON property."productId" = product.id 
+		order by r.level`)
         if (!data.length) {
 
         }
@@ -136,13 +149,25 @@ export class CategoriesService {
         let products = []
         data.forEach(element => {
             if (element.product_id) {
-                products.push({
-                    id: element.product_id,
-                    name: element.product_name,
-                    price: element.product_price,
-                    discount: element.product_discount,
-                    description: element.product_description,
-                })
+                var index = products.findIndex(el => el.id == element.product_id)
+                if (index == -1) {
+                    products.push({
+                        id: element.product_id,
+                        name: element.product_name,
+                        price: element.product_price,
+                        discount: element.product_discount,
+                        description: element.product_description,
+                        properties:[]
+                    })
+                }
+                if (element.property_key) {
+                    products[index == -1 ? products.length - 1 : index].properties.push({
+                        id:element.property_id,
+                        key: element.property_key,
+                        value: element.property_value
+                    })
+                }
+
             }
         })
         let responce: OneCategory = {
@@ -172,7 +197,7 @@ export class CategoriesService {
         }
         if (data.parent) {
             category.parent = typeof data.parent == "number" ? await this.categoryRepository.findOneBy({ id: data.parent }) : data.parent
-            if(data.parent == 0){
+            if (data.parent == 0) {
                 category.parent == null
             }
         }
@@ -180,10 +205,10 @@ export class CategoriesService {
     }
     deleteOne(id: number): Promise<DeleteResult> {
         return this.categoryRepository
-        .createQueryBuilder()
-        .delete()
-        .from(Category)
-        .where("id = :id",{id})
-        .execute()
+            .createQueryBuilder()
+            .delete()
+            .from(Category)
+            .where("id = :id", { id })
+            .execute()
     }
 }

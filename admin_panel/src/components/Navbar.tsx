@@ -10,13 +10,10 @@ const Navbar = () => {
       <nav>
         <ul className="nav_links">
           <li>
-            <Link to={"/"}>Главная</Link>
+            <Link to={"/"}>Категории</Link>
           </li>
           <li>
-            <Link to={"/create_item"}>Создать товар</Link>
-          </li>
-          <li>
-            <Link to={"/"}>Соcнуть хуйца</Link>
+            <Link to={"/order"}>Заказы</Link>
           </li>
         </ul>
       </nav>

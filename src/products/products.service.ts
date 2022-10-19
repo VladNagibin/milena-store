@@ -1,4 +1,4 @@
-import { Injectable, HttpException,HttpStatus } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import Category from 'src/entities/category.entity';
 import Product from 'src/entities/product.entity';
@@ -19,12 +19,12 @@ export class ProductsService {
     ) { }
 
     getAll(): Promise<Product[]> {
-        return this.productRepository.createQueryBuilder('product').leftJoinAndSelect('product.properties','property').getMany()
+        return this.productRepository.createQueryBuilder('product').leftJoinAndSelect('product.properties', 'property').getMany()
         //return this.productRepository.find()
     }
 
     getOne(id: number): Promise<Product> {
-        return this.productRepository.createQueryBuilder('product').leftJoinAndSelect('product.properties','property').where('product.id = :id',{id}).getOne()
+        return this.productRepository.createQueryBuilder('product').leftJoinAndSelect('product.properties', 'property').where('product.id = :id', { id }).getOne()
         //return this.productRepository.findOneBy({ id })
     }
 
@@ -80,35 +80,36 @@ export class ProductsService {
                     let propIndex = -1
                     if (prop.id) {
                         this.propertyRepository.save({
+                            id: prop.id,
                             product: product,
                             key: prop.key,
                             value: prop.value
                         }).then(result => {
                             res(result)
                         }, err => rej({
-                            success:false,
-                            err:`new property save error: ${err}`
+                            success: false,
+                            err: `new property save error: ${err}`
                         }))
                     } else {
-                        this.propertyRepository.findOneBy({ id: prop.id }).then(dataProp => {
-                            dataProp.key = prop.key
-                            dataProp.value = prop.value
-                            this.propertyRepository.save(dataProp).then(result => {
-                                res(result)
-                            }, err => rej({
-                                success:false,
-                                err:`property changing error: ${err}`
-                            }))
-                        })
+                        this.propertyRepository.save({
+                            product: product,
+                            key: prop.key,
+                            value: prop.value
+                        }).then(result => {
+                            res(result)
+                        }, err => rej({
+                            success: false,
+                            err: `new property save error: ${err}`
+                        }))
                     }
                 }))
             });
-            try{
+            try {
                 await Promise.all(propSavings)
-            }catch(e){
-                throw new HttpException(e,HttpStatus.I_AM_A_TEAPOT)
+            } catch (e) {
+                throw new HttpException(e, HttpStatus.I_AM_A_TEAPOT)
             }
-            
+
 
         }
 
