@@ -16,19 +16,6 @@ export class OrdersController {
         return this.orderService.createNew(data)
     }
 
-    @Patch(':id/:status')
-    setStatus(@Param('id') id:number,@Param('status') status:Status){
-        return this.orderService.setStatus({
-            id,
-            status
-        })
-    }   
-    @Patch(':id')
-    changeOrder(@Body() data:Array<Product | number>, @Param('id') id:number){
-        return this.orderService.changeOrder({
-            id,
-            products:data
-        })
-    }
+    
 
 }

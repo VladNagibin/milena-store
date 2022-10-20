@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react'
+import { serverURL } from '../../auth'
 import { AuthContext } from '../../context/AuthContext'
 import INewProduct from '../../interfaces/INewProduct'
 import PropertiesSettings from './PropertiesSettings'
@@ -48,7 +49,7 @@ export default function AddProducts({ reRender, id }: AddProductsProps) {
         let formData = new FormData()
         formData.append('picture', product.picture)
         console.log(formData)
-        const data = await fetch(`/products/picture/${id}`, {
+        const data = await fetch(`${serverURL}/products/picture/${id}`, {
             method: 'post',
             body: formData,
             headers: {
@@ -67,7 +68,7 @@ export default function AddProducts({ reRender, id }: AddProductsProps) {
     }
     const save = () => {
         if (window.confirm('Вы уверены что хотите создать товар?')) {
-            fetch('/products', {
+            fetch(`${serverURL}/products`, {
                 method: "POST",
                 headers: {
                     'Content-type': 'application/json',

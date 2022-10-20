@@ -5,6 +5,7 @@ import * as path from 'path'
 const isDev = process.env.NODE_ENV == 'development'
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.enableCors();
   if(!isDev){
     app.use('/',ExStatic(path.join(__dirname,'public')))
     console.log('production mode')

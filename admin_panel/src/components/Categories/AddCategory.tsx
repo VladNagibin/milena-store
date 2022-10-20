@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react'
+import { serverURL } from '../../auth'
 import { AuthContext } from '../../context/AuthContext'
 import INewCategory from '../../interfaces/INewCategory'
 
@@ -19,7 +20,7 @@ export default function AddCategory({reRender}:AddCategoryProps) {
     const save = () => {
         if (window.confirm('Вы уверены что хотите создать категорию?')) {
             var parentId = category.parentId==0?null:category.parentId
-            fetch('/categories', {
+            fetch(`${serverURL}/categories`, {
                 method: "POST",
                 headers: {
                     'Content-type': 'application/json',

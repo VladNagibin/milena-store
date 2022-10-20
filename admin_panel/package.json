@@ -1,7 +1,11 @@
 {
-  "name": "milena-store-admin_panel-",
+  "name": "administration",
   "version": "0.1.0",
-  "private": true,
+  "description": "Admin panel",
+  "main": "public/electron.js",
+  "author": "Vladislav Nagibin",
+  "license": "MIT",
+  "homepage": "./",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -12,6 +16,7 @@
     "@types/react-dom": "^18.0.6",
     "@types/uuid": "^8.3.4",
     "dotenv": "^16.0.2",
+    "electron-is-dev": "^2.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.0",
@@ -21,16 +26,31 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "set BROWSER=none && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "start:electron": "electron .",
+    "webpack": "webpack",
+    "webpack:dev": "webpack-dev-server",
+    "electron-dev": "concurrently \"npm run start\" \"wait-on http://localhost:3000 && electron .\"",
+    "electron-pack": "electron-builder build -c.extraMetadata.main=build/electron.js"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
     ]
+  },
+  "build": {
+    "appId": "com.example.electron-cra",
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    }
   },
   "proxy": "http://localhost:5000",
   "browserslist": {
@@ -44,5 +64,25 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.19.3",
+    "@babel/core": "^7.19.6",
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@babel/preset-env": "^7.19.4",
+    "@babel/preset-react": "^7.18.6",
+    "@babel/preset-typescript": "^7.18.6",
+    "babel-loader": "^8.2.5",
+    "clean-webpack-plugin": "^4.0.0",
+    "concurrently": "^7.4.0",
+    "css-loader": "^6.7.1",
+    "electron": "^21.2.0",
+    "electron-builder": "^23.6.0",
+    "html-webpack-plugin": "^5.5.0",
+    "mini-css-extract-plugin": "^2.6.1",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.11.1"
   }
 }

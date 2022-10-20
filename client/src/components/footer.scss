@@ -7,6 +7,13 @@
     background-color: $clr-c;
     align-items: center;
     height: 50px;
+    @media (max-width:400px) {
+        flex-direction: column;
+        height: fit-content;
+        div{
+            margin: 10px 0;
+        }
+    }
     div{
         text-align: center;
         cursor: pointer;

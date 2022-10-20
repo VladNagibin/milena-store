@@ -6,7 +6,9 @@
     border-radius: 20px;
     text-align: center;
     display: flex;
-    
+    @media (max-width:780px) {
+        flex-direction: column;
+    }
     .private-house{
         font-size: 20px;
         input{
@@ -21,6 +23,9 @@
         background-color: $clr;
         border: 2px solid $dark-c;
         border-radius: 20px;
+        @media (max-width:370px) {
+            width: 100%;
+        }
     }
     input:disabled{
         background-color: $clr-hover;
@@ -70,6 +75,9 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
+    @media (max-width:780px) {
+        flex-direction: column;
+    }
     .data{
         width: 70%;
         display: flex;

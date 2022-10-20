@@ -20,6 +20,8 @@ dotenv.config()
 @Module({
   imports: [ServeStaticModule.forRoot({
     rootPath: join(__dirname,'..', 'public'),
+    // rootPath: join(__dirname,'..', 'admin_panel','dist'),
+  
   }), ProductsModule, TypeOrmModule.forRoot({
     type: 'postgres',
     host: 'localhost',///172.17.0.2

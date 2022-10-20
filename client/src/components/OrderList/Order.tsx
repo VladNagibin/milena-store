@@ -12,25 +12,29 @@ export default function Order({ order }: IOrderProps) {
     console.log(order.date)
     return (
         <div className='order'>
-            <div className='id'>
-                {order.id}
-            </div>
-            <div className='left'>
-                <div className='address-div'>
-                    Адрес:{order.address ? order.address : 'Не указан'}
+            <div style={{display:"flex",justifyContent:"space-around"}}>
+                <div className='id'>
+                    {order.id}
                 </div>
-                <DateBadge date={order.date} />
-            </div>
-            <div className='right'>
-                <div className='cost'>
-                    {order.cost}Р
+                <div className='left'>
+                    <div className='address-div'>
+                        Адрес:{order.address ? order.address : 'Не указан'}
+                    </div>
+                    <DateBadge date={order.date} />
                 </div>
-                <StatusBadge status={order.status} />
             </div>
-            <div>
-                <Link to={`/profile/order/${order.id}`}><span className="material-symbols-outlined icon">
-                    keyboard_tab
-                </span></Link>
+            <div style={{display:"flex"}} className='bottom'>
+                <div className='right'>
+                    <div className='cost'>
+                        {order.cost}Р
+                    </div>
+                    <StatusBadge status={order.status} />
+                </div>
+                <div>
+                    <Link to={`/profile/order/${order.id}`}><span className="material-symbols-outlined icon">
+                        keyboard_tab
+                    </span></Link>
+                </div>
             </div>
 
         </div>

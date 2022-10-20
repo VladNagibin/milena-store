@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { serverURL } from '../auth'
 import Orders from '../components/Orders/Orders'
 import { AuthContext } from '../context/AuthContext'
 import IOrder from '../interfaces/IOrder'
@@ -7,7 +8,7 @@ export default function OrderPage() {
   const [orders, setOrders] = useState<IOrder[]>([])
   const {token} = useContext(AuthContext)
   const getOrders = () => {
-    fetch(`/orders/all`, {
+    fetch(`${serverURL}/orders/all`, {
       headers: {
         'authorization': token
       }

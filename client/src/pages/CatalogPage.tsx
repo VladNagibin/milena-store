@@ -43,7 +43,10 @@ export default function CatalogPage() {
         <div className='catalog-page'>
             <h1>{name}</h1>
             <Categories id={id} />
-            <Products products={products} />
+            {
+                products.length?<Products products={products} />:<img className='banner' src='/banners/banner-bottom.png'></img>
+            }
+            
         </div>
     )
 }

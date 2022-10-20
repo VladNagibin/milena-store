@@ -3,6 +3,7 @@ import { response } from 'express'
 import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import ICategory from '../../interfaces/ICategory'
+import { serverURL } from '../../auth'
 interface ICategoryProps {
     category: ICategory
     reRender: () => void
@@ -23,7 +24,7 @@ export default function Category({ category, reRender }: ICategoryProps) {
     }
     const deleteCategory = () => {
         if (window.confirm(`Удалить категорию ${category.name}`)) {
-            fetch(`/categories/${categoryData.id}`, {
+            fetch(`${serverURL}/categories/${categoryData.id}`, {
                 method: "DELETE",
                 headers: {
                     'Content-type': 'application/json',
@@ -37,7 +38,7 @@ export default function Category({ category, reRender }: ICategoryProps) {
     const save = () => {
         if (window.confirm(`Изменить категорию ${category.name}`)) {
             if (changesCheck()) {
-                fetch('/categories', {
+                fetch(`${serverURL}/categories`, {
                     method: "PATCH",
                     headers: {
                         'Content-type': 'application/json',

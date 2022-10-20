@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { serverURL } from '../../auth'
 import { AuthContext } from '../../context/AuthContext'
 import IProduct from '../../interfaces/IProduct'
 import PropertiesSettings from './PropertiesSettings'
@@ -26,7 +27,7 @@ export default function Product({ product,reRender }: IProductProps) {
 
   const deleteProduct = () => {
     if (window.confirm(`Удалить товар ${product.name}`)) {
-      fetch(`/products/${product.id}`, {
+      fetch(`${serverURL}/products/${product.id}`, {
         method: "DELETE",
         headers: {
           'authorization': token
@@ -40,7 +41,7 @@ export default function Product({ product,reRender }: IProductProps) {
 
   const changeProduct = () => {
     if (window.confirm(`Изменить товар ${product.name}`)) {
-      fetch(`/products`, {
+      fetch(`${serverURL}/products`, {
         method: "PATCH",
         headers: {
           'Content-type': 'application/json',
@@ -109,7 +110,7 @@ export default function Product({ product,reRender }: IProductProps) {
       </div>
 
       <label htmlFor={`file_${product.id}`} >
-        <img className={`${editing ? 'active' : ''}  ${productData.picture ? "chosen" : ""}`} src={productData.picture ? URL.createObjectURL(productData.picture) : `/pictures/${product.id}.png`} />
+        <img className={`${editing ? 'active' : ''}  ${productData.picture ? "chosen" : ""}`} src={productData.picture ? URL.createObjectURL(productData.picture) : `${serverURL}/pictures/${product.id}.png`} />
       </label>
       <input id={`file_${product.id}`} type={'file'} accept="image/*" className='hide-panel' disabled={!editing} onChange={picHandler} />
       <input type={'text'} className='name' name='name' disabled={!editing} value={productData.name} onChange={handleProduct}></input>

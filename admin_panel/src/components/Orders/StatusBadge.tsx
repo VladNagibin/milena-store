@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react'
+import { serverURL } from '../../auth'
 import { AuthContext } from '../../context/AuthContext'
 import { Status } from '../../interfaces/IOrder'
 interface IStatusBadgeProps {
@@ -13,7 +14,7 @@ export default function StatusBadge({ status, reRender, id }: IStatusBadgeProps)
     const {token} = useContext(AuthContext)
     const handleStatus = (event: React.MouseEvent<HTMLSpanElement>) => {
         if(window.confirm(`Вы уверены что хотите изменить статус заказа ${id} на ${event.currentTarget.innerHTML}?`))
-        fetch(`/orders/${id}/${event.currentTarget.id}`, {
+        fetch(`${serverURL}/orders/${id}/${event.currentTarget.id}`, {
             headers: {
                 'authorization': token
             },

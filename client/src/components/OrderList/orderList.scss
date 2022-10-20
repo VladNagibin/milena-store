@@ -8,6 +8,14 @@
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
+        @media (max-width:600px) {
+            flex-direction: column;
+            .bottom{
+                margin-top: 20px;
+                width: 100%;
+                justify-content: space-around;
+            }
+        }
         .id{
             display: flex;
             justify-content: center;

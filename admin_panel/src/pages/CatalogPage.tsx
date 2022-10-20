@@ -3,13 +3,14 @@ import React, { useEffect, useState } from 'react'
 import Products from '../components/Products/Products'
 import IProduct from '../interfaces/IProduct'
 import AddProducts from '../components/Products/AddProducts'
+import { serverURL } from '../auth'
 
 export default function CatalogPage() {
     const [products, setProducts] = useState<IProduct[]>([])
     const [name,setName] = useState('Каталог')
     const id = useParams().id
     const getProducts = () => {
-        fetch(`/categories${id ? `/${id}` : ''}`).then(response => {
+        fetch(`${serverURL}/categories${id ? `/${id}` : ''}`).then(response => {
             response.json().then((data: {
                 id: number
                 name: string

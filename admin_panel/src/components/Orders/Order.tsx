@@ -28,9 +28,9 @@ export default function Order({ order, reRender }: IOrderProps) {
                     <StatusBadge status={order.status} reRender={reRender} id={order.id} />
                 </div>
                 <div style={{ display: 'flex', width: '112px', justifyContent: 'flex-end', alignItems: "center" }}>
-                    <span className={`material-symbols-outlined icon ${editing ? '' : 'hide'}`}>
+                    {/* <span className={`material-symbols-outlined icon ${editing ? '' : 'hide'}`}>
                         save
-                    </span>
+                    </span> */}
                     <span className={`material-symbols-outlined icon ${editing ? 'opened' : 'closed-btn'}`} onClick={() => setEditing((prev) => !prev)}>
                         keyboard_tab
                     </span>
