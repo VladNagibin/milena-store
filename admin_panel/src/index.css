@@ -332,7 +332,7 @@ header button:hover {
   display: none;
 }
 
-.new-category input, .new-category label {
+.new-category input, .new-category .pic-label {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -418,6 +418,68 @@ header button:hover {
 
 .product:hover {
   box-shadow: 5px 5px rgb(203, 192, 207);
+}
+
+.product .additional-pics{
+  padding: 5px;
+  border: rgb(242, 230, 247) solid 3px;
+  border-radius: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+
+}
+
+.product .additional-pics label{
+  width: 30%;
+  border: rgb(242, 230, 247) solid 2px;
+  border-radius: 20px;
+  padding: 5px;
+
+}
+
+.product .additional-pics label img{
+  
+  height: 70px;
+  
+}
+.product .added-pics div img{
+  
+  height: 70px;
+  
+}
+.product .added-pics{
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 5px;
+  border: rgb(242, 230, 247) solid 3px;
+  border-radius: 20px;
+  justify-content: space-between;
+}
+
+.product .added-pics label{
+  width: 30%;
+  border: rgb(242, 230, 247) solid 3px;
+  border-radius: 20px;
+  height: 108px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.product .added-pics div{
+  width: 30%;
+  border: rgb(242, 230, 247) solid 3px;
+  border-radius: 20px;
+  height: 108px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product .added-pics label span{
+  font-size: 50px;
 }
 
 
@@ -670,7 +732,37 @@ header button:hover {
 }
 
 
+.enter{
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+}
 
+.enter input{
+  font-size: 20px;
+  text-align: center;
+  margin: 10px;
+  border-radius: 20px;
+  width: 260px;
+  height: 40px;
+
+}
+.enter button{
+  margin-top: 10px;
+  width: 260px;
+  font-size: 20px;
+  height: 40px;
+  background-color: #8488C5;
+  border: 0px;
+  color: rgb(242, 230, 247);
+  transition: 0.5s;
+  border-radius: 20px;
+}
+.enter button:hover{
+  background-color: #22004D;
+}
 
 .hide-panel {
   display: none;

@@ -9,4 +9,10 @@ export class NewProduct{
         value:string
     }>
     categoryId:number
+    sizes?:Array<{
+        value
+    }>
+    colors?:Array<{
+        value
+    }>
 }

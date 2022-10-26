@@ -16,6 +16,8 @@ export default function AddProducts({ reRender, id }: AddProductsProps) {
         name: "",
         categoryId: id ? id : 0,
         price: 0,
+        discount:0,
+        description:'',
         properties: [],
         picture: null,
     })
@@ -86,13 +88,18 @@ export default function AddProducts({ reRender, id }: AddProductsProps) {
         <div >
             <span className={`material-symbols-outlined icon add-btn`} onClick={() => setShow((prev) => !prev)}>add</span>
             <div className={`new-category ${show ? '' : 'hide-panel'}`} >
-                <input type={'text'} name='name' placeholder='Имя' onChange={handleProduct} value={product.name}></input>
-                <input type={'number'} name='price' placeholder='Цена' onChange={handleProduct} value={product.price == 0 ? '' : product.price}></input>
-                <input type={'number'} name='discount' placeholder='Скидка' onChange={handleProduct} value={!product.discount ? '' : product.discount}></input>
-                <input type={'text'} name='description' placeholder='Описание' onChange={handleProduct} value={product.description}></input>
+                <label htmlFor='name'>Наименование</label>
+                <input id='name' type={'text'} name='name' onChange={handleProduct} value={product.name}></input>
+                <label htmlFor='price'>Цена</label>
+                <input id='price' type={'number'} name='price' onChange={handleProduct} value={product.price}></input>
+                <label htmlFor='discount'>Скидка</label>
+                <input id='discount' type={'number'} name='discount' onChange={handleProduct} value={product.discount}></input>
+                <label htmlFor='description'>Описание</label>
+                <input id='description' type={'text'} name='description' onChange={handleProduct} value={product.description}></input>
                 <PropertiesSettings properties={product.properties} addProperty={addProperty} deleteProperty={deleteProperty} id={0}/>
-                <input type={'number'} name='parentId' placeholder='Ид родителя' onChange={handleProduct} value={product.categoryId ? product.categoryId : ''}></input>
-                <label htmlFor="picture"  className={`${product.picture == null?'':'uploaded'}`}>Картинка
+                <label htmlFor='parentId'>Родитель</label>
+                <input id='parentId' type={'number'} name='parentId' onChange={handleProduct} value={product.categoryId}></input>
+                <label htmlFor="picture"  className={`pic-label ${product.picture == null?'':'uploaded'}`}>Картинка
                     <input
                         type="file"
                         id="picture"

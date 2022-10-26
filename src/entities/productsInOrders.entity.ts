@@ -10,6 +10,9 @@ export class ProductsInOrders {
     @Column()
     public count!: number
 
+    @Column({nullable:true})
+    public size: string
+
     @ManyToOne(() => Order, (order) => order.products)
     public order!: Order
 

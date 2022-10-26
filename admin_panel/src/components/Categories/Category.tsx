@@ -14,7 +14,7 @@ export default function Category({ category, reRender }: ICategoryProps) {
         children: [],
         id: '',
         name: "",
-        parentId: null,
+        parentId: 0,
         level: 0
     })
     const [editing, setEditing] = useState(false)
@@ -46,7 +46,7 @@ export default function Category({ category, reRender }: ICategoryProps) {
                     },
                     body: JSON.stringify({
                         id: categoryData.id,
-                        parent: categoryData.parentId,
+                        parent: categoryData.parentId==0?null:categoryData.parentId,
                         name: categoryData.name
                     })
                 }).then(response => {
@@ -82,7 +82,7 @@ export default function Category({ category, reRender }: ICategoryProps) {
                 {
                     editing ? <div className='parentId'>
                         <label>Родитель</label>
-                        <input type="number" name='parentId' onChange={handleCategoryData} value={categoryData.parentId ? categoryData.parentId : ''}></input>
+                        <input type="number" name='parentId' onChange={handleCategoryData} value={categoryData.parentId}></input>
                     </div> : <></>
                 }
 

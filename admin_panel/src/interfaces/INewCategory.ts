@@ -1,4 +1,4 @@
 export default interface INewCategory{
-    parentId:number|null
+    parentId:number
     name:string
 }

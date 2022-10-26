@@ -4,13 +4,14 @@ import Loader from '../components/Loader'
 import { useHttp } from '../hooks/http.hook'
 import IProductDetailed from '../interfaces/IProductDetailed'
 import CartButtons from '../components/Products/CartButtons'
+import Pictures from '../components/Products/Pictures'
 
 export default function ProductPage() {
     const id = useParams().id
     const [product, setProduct] = useState<IProductDetailed | null>(null)
     const { request, loading } = useHttp()
     const getProduct = useCallback(async (signal: AbortSignal) => {
-        request<IProductDetailed>(`/products/${id}`, 'GET', null, {}, signal).then(data=>{
+        request<IProductDetailed>(`/products/${id}`, 'GET', null, {}, signal).then(data => {
             setProduct(data)
         })
     }, [id])
@@ -25,14 +26,25 @@ export default function ProductPage() {
     if (loading || product == null) {
         return <Loader />
     }
-    
+    if (id == undefined) {
+        location.href = '/'
+    }
+
     return (
         <div className='product-page'>
             <div className='name'>
                 {product.name}
             </div>
             <div className='top-panel'>
-                <img src={`/pictures/${id}.png`} />
+                {
+                    product.pics ? <Pictures id={id} pics={product.pics} /> :
+                        <div className='pics'>
+
+                            <img className='main-pic' src={`/pictures/${id}.png`} />
+
+                        </div>
+                }
+
                 <div className='specs'>
                     <div className='specs-values'>
                         <h3>Технические характеристики</h3>
@@ -41,6 +53,7 @@ export default function ProductPage() {
                                 return <div className='spec' key={prop.id}>{prop.key}:{prop.value}</div>
                             })
                         }
+
                     </div>
                     <div className='bottom'>
                         <div className='price'>
@@ -51,7 +64,7 @@ export default function ProductPage() {
                                 -{product.discount}%
                             </div>
                         </div>
-                        <CartButtons product={product}/>
+                        <CartButtons product={product} />
                     </div>
                 </div>
 

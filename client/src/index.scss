@@ -126,11 +126,37 @@ a {
 
         justify-content: space-between;
 
-        img {
+        .pics {
+            display: flex;
+            flex-direction: column;
             padding: 20px;
             width: 50%;
-            height: 300px;
-            object-fit: contain;
+            align-items: center;
+            @media (max-width:700px) {
+                width: 100%;
+            }
+            min-height: 300px;
+            .main-pic{
+                padding: 10px;
+                width: 80%;
+                object-fit: contain;
+                max-height: 300px;
+            }
+            .additional{
+                width: 100%;
+                flex-direction: row;
+                justify-content: space-between;
+                img{
+                    margin: 5px;
+                    padding: 5px;
+                    width: 20%;
+                    height: 80px;
+                    object-fit: contain;
+                    border: $clr-c 3px solid;
+                    border-radius: 10px;
+                    cursor: pointer;
+                }    
+            }
         }
 
         .specs {

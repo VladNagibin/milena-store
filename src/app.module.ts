@@ -14,6 +14,8 @@ import Product from './entities/product.entity';
 import { ProductsInOrders } from './entities/productsInOrders.entity';
 import Property from './entities/properties.entity';
 import { User } from './entities/user.entity';
+import Size from './entities/sizes.entity';
+import Color from './entities/colors.entity';
 dotenv.config()
 
 
@@ -24,12 +26,12 @@ dotenv.config()
   
   }), ProductsModule, TypeOrmModule.forRoot({
     type: 'postgres',
-    host: 'localhost',///172.17.0.2
+    host: 'localhost',///'172.17.0.2',//
     port: 5432,
     username: process.env.DB_LOGIN,
     password: process.env.DB_PASSWORD,
     database: process.env.DB,
-    entities: [Category,Order,Product,ProductsInOrders,Property,User],
+    entities: [Category,Order,Product,ProductsInOrders,Property,User,Size,Color],
     synchronize: true
   }), UsersModule, CategoriesModule, OrdersModule],
 })

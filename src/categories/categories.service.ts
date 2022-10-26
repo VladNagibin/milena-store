@@ -138,15 +138,40 @@ export class CategoriesService {
 		product.description as product_description,
 		property.key as property_key,
         property.id as property_id,
-		property.value as property_value
+		property.value as property_value,
+		size.id as size_id,
+		size.value as size_value,
+        color.id as color_id,
+		color.value as color_value
 		from r left join product on product."categoryId" = r.id 
-		left join property ON property."productId" = product.id 
+		left join property ON property."productId" = product.id
+		left join size ON size."productId" = product.id
+        left join color ON color."productId" = product.id
 		order by r.level`)
         if (!data.length) {
 
         }
         let first = data[0]
-        let products = []
+        let products: Array<{
+            id: string
+            name: string
+            price: number
+            discount: number
+            description: number
+            properties: Array<{
+                id: number
+                key: string
+                value: string
+            }>
+            sizes: Array<{
+                id: number
+                value: string
+            }>
+            colors: Array<{
+                id: number
+                value: string
+            }>
+        }> = []
         data.forEach(element => {
             if (element.product_id) {
                 var index = products.findIndex(el => el.id == element.product_id)
@@ -157,15 +182,40 @@ export class CategoriesService {
                         price: element.product_price,
                         discount: element.product_discount,
                         description: element.product_description,
-                        properties:[]
+                        properties: [],
+                        sizes: [],
+                        colors: []
                     })
                 }
                 if (element.property_key) {
-                    products[index == -1 ? products.length - 1 : index].properties.push({
-                        id:element.property_id,
-                        key: element.property_key,
-                        value: element.property_value
-                    })
+                    var indexProp = products[index == -1 ? products.length - 1 : index].properties.findIndex(el => el.id == element.property_id)
+                    if (indexProp == -1) {
+                        products[index == -1 ? products.length - 1 : index].properties.push({
+                            id: element.property_id,
+                            key: element.property_key,
+                            value: element.property_value
+                        })
+                    }
+
+                }
+                if (element.size_id) {
+                    var indexSize = products[index == -1 ? products.length - 1 : index].sizes.findIndex(el => el.id == element.size_id)
+                    if (indexSize == -1) {
+                        products[index == -1 ? products.length - 1 : index].sizes.push({
+                            id: element.size_id,
+                            value: element.size_value
+                        })
+                    }
+
+                }
+                if (element.color_id) {
+                    var indexColor = products[index == -1 ? products.length - 1 : index].colors.findIndex(el => el.id == element.color_id)
+                    if (indexColor == -1) {
+                        products[index == -1 ? products.length - 1 : index].colors.push({
+                            id: element.color_id,
+                            value: element.color_value
+                        })
+                    }
                 }
 
             }

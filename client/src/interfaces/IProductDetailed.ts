@@ -7,4 +7,5 @@ export default interface IProductDetailed extends IProduct{
         key:string
         value:string
     }>
+    pics:Array<string>
 }
