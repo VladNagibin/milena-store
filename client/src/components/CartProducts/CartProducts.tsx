@@ -14,7 +14,7 @@ export default function CartProducts({ products,settings }: ICartProductsProps) 
     return (
         <div className='cart-products'>{
             products.map(product => {
-                return <CartProduct key={product.id} product={product} settings={settings} />
+                return <CartProduct key={`${product.id}-${product.color}-${product.size}`} product={product} settings={settings} />
             })
         }</div>
     )

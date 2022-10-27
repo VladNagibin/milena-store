@@ -13,6 +13,9 @@ export class ProductsInOrders {
     @Column({nullable:true})
     public size: string
 
+    @Column({nullable:true})
+    public color: string
+
     @ManyToOne(() => Order, (order) => order.products)
     public order!: Order
 

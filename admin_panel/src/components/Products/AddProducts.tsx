@@ -2,7 +2,10 @@ import React, { useContext, useState } from 'react'
 import { serverURL } from '../../auth'
 import { AuthContext } from '../../context/AuthContext'
 import INewProduct from '../../interfaces/INewProduct'
+import AdditionalPics from './AdditionalPics'
+import ColorsSettings from './ColorsSettings'
 import PropertiesSettings from './PropertiesSettings'
+import SizesSettings from './SizesSettings'
 
 interface AddProductsProps {
     reRender: () => void
@@ -16,10 +19,12 @@ export default function AddProducts({ reRender, id }: AddProductsProps) {
         name: "",
         categoryId: id ? id : 0,
         price: 0,
-        discount:0,
-        description:'',
+        discount: 0,
+        description: '',
         properties: [],
         picture: null,
+        colors: [],
+        sizes: []
     })
     const handleProduct = (event: React.ChangeEvent<HTMLInputElement>) => {
         setProduct((prev) => { return { ...prev, [event.target.name]: event.target.value } })
@@ -41,6 +46,39 @@ export default function AddProducts({ reRender, id }: AddProductsProps) {
             })
             return { ...prev }
 
+        })
+    }
+
+    const addSize = (value: string) => {
+        setProduct((prev) => {
+            prev.sizes.push({
+                value
+            })
+            return { ...prev }
+
+        })
+    }
+    const deleteSize = (value: string) => {
+        setProduct((prev) => {
+            var index = prev.sizes.findIndex(el => el.value == value)
+            var sizes = [...prev.sizes.slice(0, index), ...prev.sizes.slice(index + 1)]
+            return { ...prev, sizes }
+        })
+    }
+    const addColor = (value: string) => {
+        setProduct((prev) => {
+            prev.colors.push({
+                value
+            })
+            return { ...prev }
+
+        })
+    }
+    const deleteColor = (value: string) => {
+        setProduct((prev) => {
+            var index = prev.colors.findIndex(el => el.value == value)
+            var colors = [...prev.colors.slice(0, index), ...prev.sizes.slice(index + 1)]
+            return { ...prev, colors }
         })
     }
 
@@ -87,7 +125,7 @@ export default function AddProducts({ reRender, id }: AddProductsProps) {
     return (
         <div >
             <span className={`material-symbols-outlined icon add-btn`} onClick={() => setShow((prev) => !prev)}>add</span>
-            <div className={`new-category ${show ? '' : 'hide-panel'}`} >
+            <div className={`new-category new-product ${show ? '' : 'hide-panel'}`} >
                 <label htmlFor='name'>Наименование</label>
                 <input id='name' type={'text'} name='name' onChange={handleProduct} value={product.name}></input>
                 <label htmlFor='price'>Цена</label>
@@ -96,10 +134,13 @@ export default function AddProducts({ reRender, id }: AddProductsProps) {
                 <input id='discount' type={'number'} name='discount' onChange={handleProduct} value={product.discount}></input>
                 <label htmlFor='description'>Описание</label>
                 <input id='description' type={'text'} name='description' onChange={handleProduct} value={product.description}></input>
-                <PropertiesSettings properties={product.properties} addProperty={addProperty} deleteProperty={deleteProperty} id={0}/>
+                <PropertiesSettings properties={product.properties} addProperty={addProperty} deleteProperty={deleteProperty} id={0} />
+                <SizesSettings addSize={addSize} deleteSize={deleteSize} sizes={product.sizes} id={0} />
+                <ColorsSettings addColor={addColor} deleteColor={deleteColor} colors={product.colors} id={0} />
+                
                 <label htmlFor='parentId'>Родитель</label>
                 <input id='parentId' type={'number'} name='parentId' onChange={handleProduct} value={product.categoryId}></input>
-                <label htmlFor="picture"  className={`pic-label ${product.picture == null?'':'uploaded'}`}>Картинка
+                <label htmlFor="picture" className={`pic-label ${product.picture == null ? '' : 'uploaded'}`}>Картинка
                     <input
                         type="file"
                         id="picture"
@@ -107,7 +148,7 @@ export default function AddProducts({ reRender, id }: AddProductsProps) {
                         onChange={picHandler}
                         multiple />
                 </label>
-                <img className={`${product.picture ? "" : "hide-panel"}`} style={{marginBottom:'10px'}}  src={product.picture ? URL.createObjectURL(product.picture) :''} />
+                <img className={`${product.picture ? "" : "hide-panel"}`} style={{ marginBottom: '10px' }} src={product.picture ? URL.createObjectURL(product.picture) : ''} />
                 <button onClick={save}>Сохранить</button>
             </div>
         </div>

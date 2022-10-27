@@ -38,7 +38,9 @@ export class OrdersService {
 		users.email,
         users.id as userId,
 		users.phone,
-        "products_in_orders"."count"
+        "products_in_orders"."count",
+        "products_in_orders"."size",
+        "products_in_orders"."color"
         from "order"
         left join products_in_orders ON products_in_orders."orderId" = "order".id 
         left join product ON product.id = products_in_orders."productId" 
@@ -74,7 +76,9 @@ export class OrdersService {
                 discount: el.discount,
                 price: el.price,
                 name: el.name,
-                count: el.count
+                count: el.count,
+                size:el.size,
+                color:el.color
             })
         })
         return result
@@ -91,7 +95,9 @@ export class OrdersService {
         "order".status,
         "order".address,
         "order".cost,
-        "products_in_orders"."count"
+        "products_in_orders"."count",
+        "products_in_orders"."size",
+        "products_in_orders"."color"
         from "order"
         left join products_in_orders ON products_in_orders."orderId" = "order".id 
         left join product ON product.id = products_in_orders."productId" 
@@ -114,7 +120,9 @@ export class OrdersService {
                 discount: el.discount,
                 price: el.price,
                 name: el.name,
-                count: el.count
+                count: el.count,
+                size:el.size,
+                color:el.color
             })
         })
         return result
@@ -146,6 +154,8 @@ export class OrdersService {
             productsP.push(this.productsInOrdersRepository.save({
                 product: el,
                 count: el.count,
+                color:el.color,
+                size:el.size
             }))
         })
         try {

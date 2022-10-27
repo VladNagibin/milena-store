@@ -364,7 +364,16 @@ header button:hover {
   color: rgb(242, 230, 247);
 }
 
-
+.new-product{
+  width: 500px;
+}
+.new-product input {
+  margin: 3px 0;
+  width: 100%;
+  font-size: 18px;
+  padding: 5px;
+  border-radius: 20px;
+}
 .product {
   background-color: #8488C5;
   color: rgb(242, 230, 247);
@@ -762,6 +771,11 @@ header button:hover {
 }
 .enter button:hover{
   background-color: #22004D;
+}
+.size-color{
+  align-items: center;
+  display: flex;
+  min-width: 130px;
 }
 
 .hide-panel {

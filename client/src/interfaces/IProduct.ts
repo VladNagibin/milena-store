@@ -4,4 +4,11 @@ export default interface IProduct{
     price:number
     discount:number
     description:string
+    colors?:Array<{
+        value:string
+    }>
+    sizes?:Array<{
+        value:string
+    }>
+    
 }

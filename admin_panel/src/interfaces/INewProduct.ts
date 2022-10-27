@@ -7,6 +7,12 @@ export default interface INewProduct{
         key:string,
         value:string
     }>
+    sizes:Array<{
+        value:string
+    }>
+    colors:Array<{
+        value:string
+    }>
     categoryId:number
     picture:File|null
 }

@@ -20,5 +20,7 @@ export class OrderData {
         price: number
         name: string
         count: number
+        color:string|null
+        size:string|null
     }>
 }

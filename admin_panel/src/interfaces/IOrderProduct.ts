@@ -5,4 +5,6 @@ export default interface IOrderProduct{
     price: number
     name: string
     count: number
+    size:string|null
+    color:string|null
 }

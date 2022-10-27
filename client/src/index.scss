@@ -110,10 +110,31 @@ a {
     color: inherit;
 }
 
+.chosen-color {
+    border: 3px solid $dark-c;
+    border-image: linear-gradient(to right top, $dark-c, $dark-c, $dark-c);
+    border-image-slice: 1;
+}
+
+.sizes {
+    background-color: $clr-c;
+    color: $clr;
+    border-radius: 10px;
+    border: 0px;
+}
+
 .product-page {
     display: flex;
     flex-direction: column;
     animation: fromRight 1s;
+
+    .sizes {
+        height: 30px;
+        font-size: 18px;
+        color: black;
+        background-color: $clr;
+        border: 2px solid $dark-c;
+    }
 
     .name {
         font-size: 32px;
@@ -132,21 +153,26 @@ a {
             padding: 20px;
             width: 50%;
             align-items: center;
+
             @media (max-width:700px) {
                 width: 100%;
             }
+
             min-height: 300px;
-            .main-pic{
+
+            .main-pic {
                 padding: 10px;
                 width: 80%;
                 object-fit: contain;
                 max-height: 300px;
             }
-            .additional{
+
+            .additional {
                 width: 100%;
                 flex-direction: row;
                 justify-content: space-between;
-                img{
+
+                img {
                     margin: 5px;
                     padding: 5px;
                     width: 20%;
@@ -155,7 +181,7 @@ a {
                     border: $clr-c 3px solid;
                     border-radius: 10px;
                     cursor: pointer;
-                }    
+                }
             }
         }
 
@@ -257,14 +283,16 @@ a {
         }
 
         @media (max-width:400px) {
-            img{
+            img {
                 padding: 0px;
             }
+
             .specs {
                 width: 100%;
-                
+
                 .bottom {
                     flex-direction: column;
+
                     .cart-buttons {
                         margin-top: 10px;
                     }
@@ -277,16 +305,19 @@ a {
         padding: 20px;
         display: flex;
         justify-content: space-between;
+
         @media (max-width:700px) {
             flex-direction: column;
             align-items: center;
         }
+
         .banner {
             background-color: $clr-hover;
             border-radius: 20px;
             padding: 10px;
             border: 3px solid $dark-c;
             width: 50%;
+
             @media (max-width:700px) {
                 width: 100%;
             }
@@ -368,7 +399,8 @@ a {
     border-radius: 30px;
     border: solid 3px $clr-hover;
 }
-.banner:hover{
+
+.banner:hover {
     opacity: 0.8;
     box-shadow: 5px 5px $clr-hover;
 }

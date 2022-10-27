@@ -17,7 +17,6 @@ interface ChangableProduct extends IProduct {
 }
 
 export default function Product({ product, reRender }: IProductProps) {
-  console.log(product)
   const { token } = useContext(AuthContext)
   const [editing, setEditing] = useState(false)
   const [productData, setProductData] = useState<ChangableProduct>({

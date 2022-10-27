@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAppDispatch } from '../../hooks/redux.hook'
+import ICartProduct from '../../interfaces/ICartProduct'
 import IProduct from '../../interfaces/IProduct'
 import { remove } from '../../reducers/cartReducer'
 import CartButtons from '../Products/CartButtons'
@@ -10,9 +11,7 @@ interface ICartProductProps {
         hideCartButtons: boolean
     }
 }
-interface ICartProduct extends IProduct {
-    count: number
-}
+
 export default function CartProduct({ product, settings }: ICartProductProps) {
     const [hide, setHide] = useState(false)
     const dispatch = useAppDispatch()
@@ -36,6 +35,10 @@ export default function CartProduct({ product, settings }: ICartProductProps) {
                     {product.name}
                 </div>
             </div>
+            <div className='size-color'>
+                {product.size?<div>{product.size}</div>:<></>}
+                {product.color?<div style={{width:'20px',height:"20px",margin:'5px',borderRadius:'50%',backgroundColor:product.color,border: '2px solid #22004D'}}></div>:<></>}
+            </div>
             <div className='center'>
                 <div className='price'>
                     {product.price * product.count}р
@@ -47,7 +50,7 @@ export default function CartProduct({ product, settings }: ICartProductProps) {
             {settings?.hideCartButtons ? <div className='cart-buttons'><div className='counter'>
                 {product.count}
             </div></div> :
-                <CartButtons product={product} settings={{
+                <CartButtons product={product} color={product.color} size={product.size} settings={{
                     deleteButton: true,
                     deleteButtonAction: () => setHide(true)
                 }} />}

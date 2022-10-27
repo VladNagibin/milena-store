@@ -9,12 +9,25 @@ import Pictures from '../components/Products/Pictures'
 export default function ProductPage() {
     const id = useParams().id
     const [product, setProduct] = useState<IProductDetailed | null>(null)
+    const [chosenColor,setChosenColor] = useState<string | null>(null)
+    const [chosenSize,setChosenSize] = useState<string | null>(null)
     const { request, loading } = useHttp()
     const getProduct = useCallback(async (signal: AbortSignal) => {
         request<IProductDetailed>(`/products/${id}`, 'GET', null, {}, signal).then(data => {
             setProduct(data)
+            if(data.colors && data.colors.length){
+                setChosenColor(data.colors[0].value)
+            }
+            if(data.sizes && data.sizes.length){
+                setChosenSize(data.sizes[0].value)
+            }
         })
     }, [id])
+
+    const handleSize = (event:React.ChangeEvent<HTMLSelectElement>)=>{
+        setChosenSize(event.target.value)
+    }
+
     useEffect(() => {
         const controller = new AbortController()
         getProduct(controller.signal)
@@ -23,12 +36,13 @@ export default function ProductPage() {
         })
 
     }, [])
-    if (loading || product == null) {
-        return <Loader />
-    }
     if (id == undefined) {
         location.href = '/'
     }
+    if (loading || product == null) {
+        return <Loader />
+    }
+
 
     return (
         <div className='product-page'>
@@ -55,6 +69,25 @@ export default function ProductPage() {
                         }
 
                     </div>
+                    {
+                        product.colors ?
+                            <div style={{ display: 'flex' }}>
+                                {
+                                    product.colors.map(color => <div key={color.value} onClick={()=>setChosenColor(color.value)} style={{ width: '30px', height: "30px", margin: '5px', borderRadius: '50%', backgroundColor: color.value,cursor:'pointer' }} className={`${chosenColor==color.value?'chosen-color':''}`}></div>)
+                                }
+                            </div>
+                            : <></>
+                    }
+                    {
+                        chosenSize && product.sizes ?
+                            <select value={chosenSize} onChange={handleSize}  className='sizes'>
+                                {
+                                    product.sizes.map(size=><option key={size.value} value={size.value}>{size.value}</option>)
+                                }
+                            </select>
+                            : <></>
+                    }
+
                     <div className='bottom'>
                         <div className='price'>
                             <div className='value'>
@@ -64,7 +97,7 @@ export default function ProductPage() {
                                 -{product.discount}%
                             </div>
                         </div>
-                        <CartButtons product={product} />
+                        <CartButtons product={product} color={chosenColor} size={chosenSize}/>
                     </div>
                 </div>
 

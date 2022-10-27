@@ -10,4 +10,6 @@ export class NewOrder{
 
 class CartProduct extends Product{
     count:number
+    size:string|null
+    color:string|null
 }
