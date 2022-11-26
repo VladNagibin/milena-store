@@ -26,7 +26,7 @@ export default function AddProducts({ reRender, id }: AddProductsProps) {
         colors: [],
         sizes: []
     })
-    const handleProduct = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleProduct = (event: React.ChangeEvent<HTMLInputElement|HTMLTextAreaElement>) => {
         setProduct((prev) => { return { ...prev, [event.target.name]: event.target.value } })
     }
     const picHandler = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -133,7 +133,7 @@ export default function AddProducts({ reRender, id }: AddProductsProps) {
                 <label htmlFor='discount'>Скидка</label>
                 <input id='discount' type={'number'} name='discount' onChange={handleProduct} value={product.discount}></input>
                 <label htmlFor='description'>Описание</label>
-                <input id='description' type={'text'} name='description' onChange={handleProduct} value={product.description}></input>
+                <textarea id='description' name='description' onChange={handleProduct} value={product.description}></textarea>
                 <PropertiesSettings properties={product.properties} addProperty={addProperty} deleteProperty={deleteProperty} id={0} />
                 <SizesSettings addSize={addSize} deleteSize={deleteSize} sizes={product.sizes} id={0} />
                 <ColorsSettings addColor={addColor} deleteColor={deleteColor} colors={product.colors} id={0} />

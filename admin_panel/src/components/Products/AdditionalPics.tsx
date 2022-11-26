@@ -102,7 +102,7 @@ export default function AdditionalPics({ id,reRender }: AdditionalPicsProps) {
             </div>
             <div className={`${additionalPics.length ? 'additional-pics' : 'hide-panel'}`}>
                 {
-                    additionalPics.map(el => <label htmlFor={el.url} key={el.url}><img src={el.url} /><input id={el.url} type={'checkbox'} name={el.url} checked={el.active} onChange={handleCheckBox}></input></label>)
+                    additionalPics.map(el => <label htmlFor={el.url} key={el.url}><img src={serverURL + el.url} /><input id={el.url} type={'checkbox'} name={el.url} checked={el.active} onChange={handleCheckBox}></input></label>)
                 }
             </div>
             <div className='added-pics'>

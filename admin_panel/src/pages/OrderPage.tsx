@@ -6,7 +6,7 @@ import IOrder from '../interfaces/IOrder'
 
 export default function OrderPage() {
   const [orders, setOrders] = useState<IOrder[]>([])
-  const {token} = useContext(AuthContext)
+  const { token } = useContext(AuthContext)
   const getOrders = () => {
     fetch(`${serverURL}/orders/all`, {
       headers: {
@@ -24,7 +24,7 @@ export default function OrderPage() {
   return (
     <div>
       <h1>Заказы</h1>
-      <Orders orders={orders} reRender={getOrders} />
+      {orders.length ? <Orders orders={orders} reRender={getOrders} /> : <></>}
     </div>
   )
 }

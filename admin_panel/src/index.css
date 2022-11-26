@@ -374,6 +374,13 @@ header button:hover {
   padding: 5px;
   border-radius: 20px;
 }
+.new-product textarea {
+  margin: 3px 0;
+  width: 100%;
+  font-size: 18px;
+  padding: 5px;
+  border-radius: 20px;
+}
 .product {
   background-color: #8488C5;
   color: rgb(242, 230, 247);

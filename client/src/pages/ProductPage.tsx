@@ -61,7 +61,7 @@ export default function ProductPage() {
 
                 <div className='specs'>
                     <div className='specs-values'>
-                        <h3>Технические характеристики</h3>
+                        <h3>Описание</h3>
                         {
                             product.properties.map(prop => {
                                 return <div className='spec' key={prop.id}>{prop.key}:{prop.value}</div>
@@ -104,7 +104,7 @@ export default function ProductPage() {
             </div>
             <h2>Описание</h2>
             <div className='description'>
-                <div className='desc-value'>
+                <div className='desc-value' style={{whiteSpace:'pre'}}>
                     {product.description}
                 </div>
                 <div className='banner'>
