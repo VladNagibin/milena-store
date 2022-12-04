@@ -15,4 +15,6 @@ export default interface IProduct{
         key:string
         value:string
     }>
+    favorite:boolean
+    latest:boolean
 }

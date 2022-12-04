@@ -1,4 +1,4 @@
-import { Controller, Param, Post, Body, Patch, Delete, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { Controller, Param, Post, Body, Patch, Delete, UseInterceptors, UploadedFile, Put } from '@nestjs/common';
 import { ChangeProduct } from './dto/change-product.dto';
 import { NewProduct } from './dto/new-product.dto';
 import { ProductsService } from './products.service';
@@ -24,7 +24,22 @@ export class ProductAdminController {
             message: 'picture was successfully saved'
         }
     }
-
+    @Put('/:id/favorite/set')
+    setFavorite(@Param('id') id:number){
+        return this.productsService.setFavorite(id,true)
+    }
+    @Put('/:id/favorite/unset')
+    unsetFavorite(@Param('id') id:number){
+        return this.productsService.setFavorite(id,false)
+    }
+    @Put('/:id/latest/set')
+    setLatest(@Param('id') id:number){
+        return this.productsService.setLatest(id,true)
+    }
+    @Put('/:id/latest/unset')
+    unsetLatest(@Param('id') id:number){
+        return this.productsService.setLatest(id,false)
+    }
     @Post('/picture/additional/:id')
     @UseInterceptors(FileInterceptor('picture'))
     setAdditionalPic(@Param('id') id: number, @UploadedFile() file: Express.Multer.File) {

@@ -28,7 +28,9 @@ export default function Product({ product, reRender }: IProductProps) {
     picture: null,
     sizes: [],
     properties: [],
-    colors: []
+    colors: [],
+    favorite:false,
+    latest:false
   })
 
 
@@ -157,6 +159,25 @@ export default function Product({ product, reRender }: IProductProps) {
       return { ...prev, [event.target.name]: event.target.value }
     })
   }
+  const handleFavorite = async () => {
+    await fetch(`${serverURL}/products/${product.id}/favorite/${productData.favorite?'unset':'set'}`, {
+      method: 'put',
+      headers: {
+        'authorization': token
+      }
+    })
+    reRender()
+  }
+  const handleLatest = async () => {
+    await fetch(`${serverURL}/products/${product.id}/latest/${productData.latest?'unset':'set'}`, {
+      method: 'put',
+      headers: {
+        'authorization': token
+      }
+    })
+    reRender()
+  }
+
   useEffect(() => {
     setProductData({ ...product, picture: null })
   }, [product])
@@ -166,6 +187,8 @@ export default function Product({ product, reRender }: IProductProps) {
         <span className={`material-symbols-outlined icon ${editing ? '' : 'hide-panel'}`} style={{ textAlign: 'right' }} onClick={clearPic} >clear</span>
         <span className={`material-symbols-outlined icon ${editing ? '' : 'hide-panel'}`} style={{ textAlign: 'right' }} onClick={changeProduct}>save</span>
         <span className={`material-symbols-outlined icon ${editing ? '' : 'hide-panel'}`} style={{ textAlign: 'right' }} onClick={deleteProduct}>delete</span>
+        <span className={`material-symbols-outlined icon ${editing ? '' : 'hide-panel'}`} style={{ textAlign: 'right' }} onClick={handleFavorite}>{productData.favorite?'favorite':'heart_plus'}</span>
+        <span className={`material-symbols-outlined icon ${editing ? '' : 'hide-panel'}`} style={{ textAlign: 'right' }} onClick={handleLatest}>{productData.latest?'schedule':'more_time'}</span>
         <span className={`material-symbols-outlined icon`} style={{ textAlign: 'right' }} onClick={() => setEditing((prev) => !prev)} >edit</span>
       </div>
 

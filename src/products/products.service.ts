@@ -199,4 +199,38 @@ export class ProductsService {
         return this.productRepository.save(product)
     }
 
+    async setFavorite(id:number,favorite:boolean){
+        const product = await this.productRepository.findOneBy({id})
+        if((!product.favorite && favorite) || (product.favorite && !favorite) ){
+            product.favorite = favorite
+            await this.productRepository.save(product)
+        }
+        return product
+    }
+
+    async setLatest(id:number,latest:boolean){
+        const product = await this.productRepository.findOneBy({id})
+        if((!product.latest && latest) || (product.latest && !latest) ){
+            product.latest = latest
+            await this.productRepository.save(product)
+        }
+        return product
+    }
+    getFavorites(){
+        return this.productRepository
+        .createQueryBuilder('product')
+        .leftJoinAndSelect('product.properties', 'property')
+        .leftJoinAndSelect('product.sizes', 'size')
+        .leftJoinAndSelect('product.colors', 'color')
+        .where('product.favorite').getMany()
+    }
+    getLatest(){
+        return this.productRepository
+        .createQueryBuilder('product')
+        .leftJoinAndSelect('product.properties', 'property')
+        .leftJoinAndSelect('product.sizes', 'size')
+        .leftJoinAndSelect('product.colors', 'color')
+        .where('product.latest').getMany() 
+    }
+
 }

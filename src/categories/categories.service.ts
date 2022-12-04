@@ -135,6 +135,8 @@ export class CategoriesService {
 		product.name as product_name,
 		product.price as product_price,
 		product.discount as product_discount,
+        product.latest as latest,
+        product.favorite as favorite,
 		product.description as product_description,
 		property.key as property_key,
         property.id as property_id,
@@ -158,6 +160,8 @@ export class CategoriesService {
             price: number
             discount: number
             description: number
+            favorite:boolean
+            latest:boolean
             properties: Array<{
                 id: number
                 key: string
@@ -182,6 +186,8 @@ export class CategoriesService {
                         price: element.product_price,
                         discount: element.product_discount,
                         description: element.product_description,
+                        favorite:element.favorite,
+                        latest:element.latest,
                         properties: [],
                         sizes: [],
                         colors: []

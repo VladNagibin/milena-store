@@ -16,6 +16,12 @@ export default class Product{
     @Column()
     price:number
 
+    @Column({default:false})
+    favorite:boolean
+    
+    @Column({default:false})
+    latest:boolean
+    
     @Column({nullable:true})
     discount:number
     

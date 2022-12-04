@@ -5,10 +5,13 @@ import IProduct from '../../interfaces/IProduct'
 import { add } from '../../reducers/cartReducer'
 import CartButtons from './CartButtons'
 interface IProductProps {
-  product: IProduct
+  product: IProduct,
+  settings?:{
+    slider:boolean
+  }
 }
 
-export default function Product({ product }: IProductProps) {
+export default function Product({ product,settings }: IProductProps) {
   const [chosenColor, setChosenColor] = useState<string | null>(product.colors?.length ? product.colors[0].value : null)
   const [chosenSize, setChosenSize] = useState<string | null>(product.sizes?.length ? product.sizes[0].value : null)
 
@@ -16,7 +19,7 @@ export default function Product({ product }: IProductProps) {
     setChosenSize(event.target.value)
   }
   return (
-    <div className='product'>
+    <div className='product' style={settings?.slider?{width:"95%"}:{}}>
       <Link to={`/catalog/product/${product.id}`}>
         <img src={`/pictures/${product.id}.png`} />
       </Link>
