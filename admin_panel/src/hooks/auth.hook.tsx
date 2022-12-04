@@ -27,7 +27,6 @@ export const useAuth = () => {
 
   useEffect(()=>{
     let dataStr = sessionStorage.getItem(localStorageName)
-    console.log(dataStr)
     if(dataStr){
         let data = JSON.parse(dataStr)
         setToken(data.token)

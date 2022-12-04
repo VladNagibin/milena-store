@@ -1,4 +1,4 @@
-import { BrowserRouter as Router } from "react-router-dom";
+import { MemoryRouter as Router } from "react-router-dom";
 import { userRoutes } from "./Routes";
 import { useAuth } from "./hooks/auth.hook";
 import { AuthContext } from "./context/AuthContext";
@@ -11,7 +11,6 @@ function App() {
   if(!ready){
     return <Loader/>
   }
-  console.log(token)
   return (
     <AuthContext.Provider value={{
       enter, out, token, ready

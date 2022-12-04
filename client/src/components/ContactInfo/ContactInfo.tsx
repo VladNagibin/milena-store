@@ -4,6 +4,7 @@ import { useHttp } from '../../hooks/http.hook'
 import { useAppSelector } from '../../hooks/redux.hook'
 import InputMask from 'react-input-mask';
 import Loader from '../Loader';
+import { toast } from 'react-toastify';
 
 
 export default function ContactInfo() {
@@ -24,7 +25,7 @@ export default function ContactInfo() {
 
   const saveContactData = async () => {
     request(`/users/${login}`, 'PATCH', contactInfo, { Authorization: token }).then(result => {
-      alert('Ваши контактные данные обновлены')
+      toast.success('Ваши контактные данные обновлены')
     })
   }
 
