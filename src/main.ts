@@ -5,14 +5,14 @@ import fs from 'fs';
 import * as path from 'path';
 const isDev = process.env.NODE_ENV == 'development';
 async function bootstrap() {
-  let privateKey = fs
+  const privateKey = fs
     .readFileSync('../../etc/letsencrypt/live/choose-votes.ru/privkey.pem')
     .toString();
-  let certificate = fs
+  const certificate = fs
     .readFileSync('../../etc/letsencrypt/live/choose-votes.ru/cert.pem')
     .toString();
 
-  let httpsOptions = { key: privateKey, cert: certificate };
+  const httpsOptions = { key: privateKey, cert: certificate };
   const app = await NestFactory.create(AppModule, { httpsOptions });
   app.enableCors();
   if (!isDev) {
