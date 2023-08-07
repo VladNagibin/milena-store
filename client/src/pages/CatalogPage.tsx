@@ -46,7 +46,6 @@ export default function CatalogPage() {
   return (
     <div className="catalog-page">
       <h1>{name}</h1>
-      <Categories id={id} />
       {products.length ? (
         <Products products={products} />
       ) : (
