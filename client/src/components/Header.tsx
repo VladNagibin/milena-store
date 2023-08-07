@@ -1,97 +1,47 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
-import { useAppDispatch, useAppSelector } from '../hooks/redux.hook'
-import { out } from '../reducers/authReducer'
+import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import { Button, InputAdornment, TextField } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import { useAppDispatch, useAppSelector } from '../hooks/redux.hook';
+import DehazeIcon from '@mui/icons-material/Dehaze';
+import { out } from '../reducers/authReducer';
 export default function Header() {
-  const { login } = useAppSelector(state => state.auth)
-  const dispatch = useAppDispatch()
-  const lenght = useAppSelector(state=>state.cart.products.length)
+  const { login } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+  const length = useAppSelector((state) => state.cart.products.length);
   return (
-    <div className='header'>
-      <div className='panel'>
-        <div className='navigation'>
-          <ul>
-            <NavLink to={'/'} end >
-              {({ isActive }) => {
-                return <li className={`list ${isActive ? 'active' : ''}`}>
-                  <div><span className="material-symbols-outlined icon">
-                    home
-                  </span>
-                    <span className='text'>Домой</span></div>
-                </li>
-              }}
-
-            </NavLink>
-            <NavLink to={'/catalog'} >
-              {({ isActive }) => {
-                return <li className={`list ${isActive ? 'active' : ''}`}>
-                  <div><span className="material-symbols-outlined icon">
-                    category
-                  </span>
-                    <span className='text'>Каталог</span></div>
-                </li>
-              }}
-
-            </NavLink>
-            <NavLink to={'/cart'} >
-                  {({ isActive }) => {
-                    return <li className={`list ${isActive ? 'active' : ''}`}>
-                      <div>
-                        
-                        <span className="material-symbols-outlined icon">
-                        {
-                          lenght?"shopping_cart_checkout":"shopping_cart"
-                        }
-                        </span>
-                        <span className='text'>Корзина</span></div>
-                    </li>
-                  }}
-
-                </NavLink>
-            {login ?
-              <><NavLink to={'/profile'} >
-                {({ isActive }) => {
-                  return <li className={`list ${isActive ? 'active' : ''}`}>
-                    <div>
-                      <span className="material-symbols-outlined icon">
-                        person
-                      </span>
-                      <span className='text'>Профиль</span></div>
-                  </li>
-                }}
-
-              </NavLink>
-              </>
-              :
-              <NavLink to={'/auth'}>
-                {({ isActive }) => {
-                  return <li className={`list ${isActive ? 'active' : ''}`}>
-                    <div>
-                      <span className="material-symbols-outlined icon">
-                        login
-                      </span>
-                      <span className='text'>Вход</span></div>
-                  </li>
-                }}
-
-              </NavLink>}
-            <div className='indicator'></div>
-          </ul>
+    <div className="header">
+      <div className="top">
+        <div className="logo">
+          <img src="/logo-ms-1.png" />
         </div>
-        <div className='right'>
-          <img className='logo' src='/logo.png'></img>
-          {
-            login?<div className='out-button' onClick={() => { dispatch(out()) }}>
-            <span className="material-symbols-outlined" >
-              logout
-            </span>
-            Выйти
-          </div>:<></>
-          }
-          
+        <div className="catalog">
+          <Button startIcon={<DehazeIcon />}>Каталог</Button>
         </div>
-
+        <div className="finder">
+          <TextField
+            placeholder="Поиск"
+            fullWidth
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            }}
+          />
+        </div>
+        <div className="buttons">
+          <Button>Корзина</Button>
+          <Button>Выйти</Button>
+        </div>
       </div>
-    </div >
-  )
+      <div className="bottom">
+        <NavLink to="/">Доставка и оплата</NavLink>
+        <NavLink to="/">Контакты</NavLink>
+        <NavLink to="/">О компании</NavLink>
+        <NavLink to="/">+7 983 564 66 31</NavLink>
+      </div>
+    </div>
+  );
 }

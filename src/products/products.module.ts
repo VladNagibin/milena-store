@@ -1,4 +1,4 @@
-import { Module,NestModule,MiddlewareConsumer } from '@nestjs/common';
+import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import Category from 'src/entities/category.entity';
 import Color from 'src/entities/colors.entity';
@@ -11,14 +11,15 @@ import { ProductsController } from './products.controller';
 import { ProductsService } from './products.service';
 
 @Module({
-  imports:[Product, TypeOrmModule.forFeature([Product,Category,Property,Size,Color])],
+  imports: [
+    Product,
+    TypeOrmModule.forFeature([Product, Category, Property, Size, Color]),
+  ],
   providers: [ProductsService],
-  controllers:[ProductsController,ProductAdminController]
+  controllers: [ProductsController, ProductAdminController],
 })
 export class ProductsModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer
-    .apply(AdminMiddleware)
-    .forRoutes(ProductAdminController)
+    consumer.apply(AdminMiddleware).forRoutes(ProductAdminController);
   }
 }
